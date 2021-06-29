@@ -95,22 +95,29 @@
 
                                 <p> {{ $comment->body }}</p>
 
-                                <a data-toggle="collapse" href="#collapseReply-{{ $comment->id }}" aria-expanded="false"
-                                    role="button" aria-controls="collapseReply-{{ $comment->id }}">
-                                    Reply
-                                </a>
+                                <div class="d-flex justify-content-between">
+                                    <a data-toggle="collapse" href="#collapseReply-{{ $comment->id }}"
+                                        aria-expanded="false" role="button"
+                                        aria-controls="collapseReply-{{ $comment->id }}">
+                                        Reply
+                                    </a>
 
-                                <div class="collapse mt-2" id="collapseReply-{{ $comment->id }}">
-                                    <form action="{{ route('comment.store') }}" method="POST">
+                                    <p class="mb-0 text-secondary">
+                                        {{ $comment->replies_count > 0 ? $comment->replies_count . ' ' . Str::plural('Reply', $comment->replies_count) : '' }}
+                                    </p>
+                                </div>
+
+                                <div class=" collapse mt-2" id="collapseReply-{{ $comment->id }}">
+                                    <form action="{{ route('reply.store') }}" method="POST">
                                         @csrf
                                         @method('POST')
 
                                         <input type="hidden" name="comment_id" value="{{ $comment->id }}">
 
                                         <div class="form-group mb-2">
-                                            <textarea class="form-control @error('body') is-invalid @enderror" name="body"
-                                                id="body" placeholder="Nice comment bro!">{{ old('body') }}</textarea>
-                                            @error('body')
+                                            <textarea class="form-control @error('reply') is-invalid @enderror" name="reply"
+                                                id="reply" placeholder="Nice comment bro!">{{ old('reply') }}</textarea>
+                                            @error('reply')
                                                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -122,8 +129,21 @@
                                             </button>
                                         </div>
                                     </form>
+
+                                    <div class="ml-5">
+                                        @foreach ($comment->replies as $reply)
+                                            <hr class="ml-4">
+
+                                            <span class="font-weight-bold ml-4">{{ $reply->user->name }}</span> -
+                                            {{ $reply->created_at->diffForHumans() }}
+
+                                            <p class="ml-4">{{ $reply->body }}</p>
+                                        @endforeach
+                                    </div>
                                 </div>
+
                                 <hr>
+
                             </div>
                         @empty
                             <p class="font-weight-bold text-secondary mb-0 text-center">

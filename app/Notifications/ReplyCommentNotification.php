@@ -2,27 +2,25 @@
 
 namespace App\Notifications;
 
-use App\Models\Post;
-use App\Models\Comment;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
-class PostCommentNotification extends Notification implements ShouldQueue
+class ReplyCommentNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $post, $comment;
+    public $reply, $comment;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Post $post, Comment $comment)
+    public function __construct($reply, $comment)
     {
-        $this->post = $post;
+        $this->reply = $reply;
         $this->comment = $comment;
     }
 
@@ -46,11 +44,11 @@ class PostCommentNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('New Comment Added')
-            ->line('A new comment to your post -' . $this->post->title)
-            ->line('Comment:')
-            ->line($this->comment->user->name . ' - ' . $this->comment->body)
-            ->action('View post', route('post.show', $this->post->slug))
+            ->subject('New Reply Notification')
+            ->line('Your comment recevied a new reply.')
+            ->line('Reply:')
+            ->line($this->reply->user->name . ' - ' . $this->reply->body)
+            ->action('View post', route('post.show', $this->comment->post->slug))
             ->line('Thank you for using our application!');
     }
 
@@ -63,7 +61,7 @@ class PostCommentNotification extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'post' => $this->post,
+            'reply' => $this->reply,
             'comment' => $this->comment
         ];
     }

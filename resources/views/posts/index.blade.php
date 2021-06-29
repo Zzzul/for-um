@@ -65,7 +65,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center">Posts not found.</td>
+                                <td colspan="5" class="text-center">Posts not found.</td>
                             </tr>
                         @endforelse
                     </tbody>

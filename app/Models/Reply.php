@@ -5,28 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Reply extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    protected $with = ['user', 'replies'];
+    protected $with = ['user'];
 
-    protected $withCount = ['replies'];
-
-    public function post()
+    public function comment()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Comment::class);
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function replies()
-    {
-        return $this->hasMany(Reply::class);
     }
 }
