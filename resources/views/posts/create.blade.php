@@ -44,7 +44,10 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-outline-primary">Publish</button>
+                            <button type="submit" class="btn btn-outline-primary">
+                                <i class="fas fa-paper-plane"></i>
+                                Publish
+                            </button>
                         </form>
                     </div>
                 </div>

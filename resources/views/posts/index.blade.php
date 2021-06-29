@@ -20,6 +20,7 @@
                 <h4 class="float-left">All Your Posts</h4>
 
                 <a href="{{ route('post.create') }}" class="btn btn-outline-primary float-right">
+                    <i class="fas fa-plus"></i>
                     Create New Post
                 </a>
             </div>
@@ -45,7 +46,9 @@
                                 <td>{{ $post->comments_count . ' ' . Str::plural('Comment', $post->comments_count) }}</td>
                                 <td>
                                     <a href="{{ route('post.edit', $post->slug) }}"
-                                        class="btn btn-outline-info btn-sm">Edit</a>
+                                        class="btn btn-outline-info btn-sm mb-1">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
 
                                     {{-- <a href="#" data-id={{ $post->slug }} class="btn btn-danger delete"
                                         data-toggle="modal" data-target="#deleteModal">Delete</a> --}}
@@ -54,7 +57,9 @@
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" name="slug" value="{{ $post->slug }}">
-                                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

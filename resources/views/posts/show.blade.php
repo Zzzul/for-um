@@ -37,8 +37,9 @@
 
                             @if (auth()->id() === $post->user_id)
                                 <br>
-                                <a href="{{ route('post.edit', $post->slug) }}"
-                                    class="btn btn-outline-primary btn-sm">Edit</a>
+                                <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-outline-info btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
                             @endif
                         </small>
 
@@ -72,7 +73,10 @@
                                 </div>
 
                                 <div class="col-md-2 mt-4 mb-2 pt-1">
-                                    <button type="submit" class="btn btn-outline-primary btn-block h-100">Submit</button>
+                                    <button type="submit" class="btn btn-outline-primary btn-block h-100">
+                                        <i class="fas fa-paper-plane"></i>
+                                        Send
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -91,7 +95,34 @@
 
                                 <p> {{ $comment->body }}</p>
 
-                                {{-- <a href="#">Reply</a> --}}
+                                <a data-toggle="collapse" href="#collapseReply-{{ $comment->id }}" aria-expanded="false"
+                                    role="button" aria-controls="collapseReply-{{ $comment->id }}">
+                                    Reply
+                                </a>
+
+                                <div class="collapse mt-2" id="collapseReply-{{ $comment->id }}">
+                                    <form action="{{ route('comment.store') }}" method="POST">
+                                        @csrf
+                                        @method('POST')
+
+                                        <input type="hidden" name="comment_id" value="{{ $comment->id }}">
+
+                                        <div class="form-group mb-2">
+                                            <textarea class="form-control @error('body') is-invalid @enderror" name="body"
+                                                id="body" placeholder="Nice comment bro!">{{ old('body') }}</textarea>
+                                            @error('body')
+                                                <span class="invalid-feedback" role="alert">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-outline-primary">
+                                                <i class="fas fa-paper-plane"></i>
+                                                Send
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                                 <hr>
                             </div>
                         @empty

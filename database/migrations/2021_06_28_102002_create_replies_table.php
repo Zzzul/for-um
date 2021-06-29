@@ -17,6 +17,7 @@ class CreateRepliesTable extends Migration
             $table->id();
             $table->foreignId('comment_id')->constrained('comments');
             $table->foreignId('user_id')->constrained('users');
+            $table->text('body');
             $table->timestamps();
         });
     }

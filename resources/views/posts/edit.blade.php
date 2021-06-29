@@ -52,7 +52,10 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-outline-primary">Update</button>
+                            <button type="submit" class="btn btn-outline-primary">
+                                <i class="fas fa-paper-plane"></i>
+                                Update
+                            </button>
                         </form>
                     </div>
                 </div>
