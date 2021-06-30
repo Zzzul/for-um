@@ -66,14 +66,16 @@
                                 <div class="col-md-10">
                                     <label for="body">Write Comment</label>
                                     <textarea class="form-control @error('body') is-invalid @enderror" name="body" id="body"
-                                        placeholder="Nice posts!">{{ old('body') }}</textarea>
+                                        placeholder="{{ auth()->check() ? 'Nice posts!' : 'You must be login.' }}"
+                                        autofocus @guest disabled @endguest>{{ old('body') }}</textarea>
                                     @error('body')
                                         <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-2 mt-4 mb-2 pt-1">
-                                    <button type="submit" class="btn btn-outline-primary btn-block h-100">
+                                    <button type="submit" class="btn btn-outline-primary btn-block h-100" @guest disabled
+                                        @endguest>
                                         <i class="fas fa-paper-plane"></i>
                                         Send
                                     </button>
@@ -116,14 +118,16 @@
 
                                         <div class="form-group mb-2">
                                             <textarea class="form-control @error('reply') is-invalid @enderror" name="reply"
-                                                id="reply" placeholder="Nice comment bro!">{{ old('reply') }}</textarea>
+                                                id="reply"
+                                                placeholder="{{ auth()->check() ? 'Nice comment bro!' : 'You must be login.' }}"
+                                                autofocus @guest disabled @endguest>{{ old('reply') }}</textarea>
                                             @error('reply')
                                                 <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                             @enderror
                                         </div>
 
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-outline-primary">
+                                            <button type="submit" class="btn btn-outline-primary" @guest disabled @endguest>
                                                 <i class="fas fa-paper-plane"></i>
                                                 Send
                                             </button>
