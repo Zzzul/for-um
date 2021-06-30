@@ -32,6 +32,8 @@
                         <th>Title</th>
                         <th>Content</th>
                         <th>Comments</th>
+                        <th>Created At</th>
+                        <th>Updated At</th>
                         <th>Action</th>
                     </thead>
 
@@ -44,6 +46,8 @@
                                 </td>
                                 <td>{{ Str::limit($post->content, 100) }}</td>
                                 <td>{{ $post->comments_count . ' ' . Str::plural('Comment', $post->comments_count) }}</td>
+                                <td>{{ $post->created_at->diffForHumans() }}</td>
+                                <td>{{ $post->updated_at->diffForHumans() }}</td>
                                 <td>
                                     <a href="{{ route('post.edit', $post->slug) }}"
                                         class="btn btn-outline-info btn-sm mb-1">

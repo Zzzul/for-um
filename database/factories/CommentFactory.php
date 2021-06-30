@@ -23,10 +23,13 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
+        $user = User::factory()->create();
+        $post = Post::factory()->create();
+
         return [
-            'user_id' => User::factory()->create(),
-            'post_id' => Post::factory()->create(),
-            'body' => $this->faker->paragraph(1)
+            'user_id' => $user->id,
+            'post_id' => $post->id,
+            'body' => $this->faker->paragraph(2)
         ];
     }
 }
