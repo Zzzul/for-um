@@ -9,7 +9,7 @@ class Reply extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['user_id', 'comment_id', 'body'];
+    protected $fillable = ['user_id', 'comment_id', 'body'];
 
     protected $with = ['user'];
 

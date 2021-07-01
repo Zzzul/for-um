@@ -9,9 +9,15 @@
             <div class="col-md-8 mb-4">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('post.index') }}">Post</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $post->title }}</li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('home') }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('post.index') }}">Post</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            {{ $post->title }}
+                        </li>
                     </ol>
                 </nav>
 
@@ -90,10 +96,38 @@
                     <div class="card-body">
                         @forelse ($post->comments as $comment)
                             <div class="mb-2">
-                                <span class="font-weight-bold">{{ $comment->user->name }}</span> -
-                                {{ $comment->created_at->diffForHumans() }}
+                                <div class="d-flex justify-content-between mb-0">
+                                    <p class="mb-0">
+                                        <span class="font-weight-bold">
+                                            {{ $comment->user->name }}
 
-                                <br>
+                                        </span>
+                                        - {{ $comment->created_at->diffForHumans() }}
+
+                                        <small class="text-secondary">
+                                            {{ $comment->created_at != $comment->updated_at ? '(edited)' : '' }}
+                                        </small>
+                                    </p>
+
+                                    @if (auth()->id() === $comment->user_id)
+                                        <span>
+                                            <a href="{{ route('comment.edit', $comment->id) }}" class="float-left mr-1">
+                                                <button class="btn btn-outline-info btn-sm">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </a>
+
+                                            <form action="{{ route('comment.destroy', $comment->id) }}" method="POST"
+                                                class="float-right">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-outline-danger  btn-sm">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </span>
+                                    @endif
+                                </div>
 
                                 <p> {{ $comment->body }}</p>
 
@@ -101,7 +135,7 @@
                                     <a data-toggle="collapse" href="#collapseReply-{{ $comment->id }}"
                                         aria-expanded="false" role="button"
                                         aria-controls="collapseReply-{{ $comment->id }}">
-                                        Reply
+                                        <i class="fas fa-reply"></i> Reply
                                     </a>
 
                                     <p class="mb-0 text-secondary">
@@ -136,12 +170,46 @@
 
                                     <div class="ml-5">
                                         @foreach ($comment->replies as $reply)
-                                            <hr class="ml-4">
+                                            <hr class="ml-4 mt-0">
 
-                                            <span class="font-weight-bold ml-4">{{ $reply->user->name }}</span> -
-                                            {{ $reply->created_at->diffForHumans() }}
+                                            <div class="d-flex justify-content-between mb-0">
+                                                <div>
+                                                    <span class="font-weight-bold ml-4">{{ $reply->user->name }}</span> -
+                                                    {{ $reply->created_at->diffForHumans() }}
 
-                                            <p class="ml-4">{{ $reply->body }}</p>
+                                                    <small class="text-secondary">
+                                                        {{ $reply->created_at != $reply->updated_at ? '(edited)' : '' }}
+                                                    </small>
+
+                                                    <p class="ml-4">{{ $reply->body }}
+                                                    </p>
+                                                </div>
+
+                                                <div>
+                                                    @if (auth()->id() === $reply->user_id)
+                                                        <span>
+                                                            <a href="{{ route('reply.edit', $reply->id) }}"
+                                                                class="float-left mr-1">
+                                                                <button class="btn btn-outline-info btn-sm">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </button>
+                                                            </a>
+
+                                                            <form action="{{ route('reply.destroy', $reply->id) }}"
+                                                                method="POST" class="float-right">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-outline-danger btn-sm">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </button>
+                                                            </form>
+                                                        </span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+
+
                                         @endforeach
                                     </div>
                                 </div>

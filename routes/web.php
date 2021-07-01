@@ -24,20 +24,18 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
-Route::get('/test', function () {
-    $post = App\Models\Post::get()->count();
-
-    dd($post);
-});
-
 Route::resource('post', PostController::class);
 
-Route::resource('comment', CommentController::class);
+Route::middleware(['auth'])->group(function () {
+    Route::resource('comment', CommentController::class)
+        ->except('create', 'show');
 
-Route::resource('reply', ReplyController::class)->middleware('auth');
+    Route::resource('reply', ReplyController::class)
+        ->except('create', 'show');
 
-Route::get('/notification', [UserController::class, 'notification'])
-    ->name('notification')->middleware('auth');
+    Route::get('/notification', [UserController::class, 'notification'])
+        ->name('notification');
 
-Route::get('/notification/{id}/{slug}', [UserController::class, 'markAsReadNotification'])
-    ->name('notification.markAsRead')->middleware('auth');
+    Route::get('/notification/{id}/{slug}', [UserController::class, 'markAsReadNotification'])
+        ->name('notification.markAsRead');
+});

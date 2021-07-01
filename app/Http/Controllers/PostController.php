@@ -58,21 +58,18 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
     {
-        // return $post;
-        // die;
-
         return view('posts.show', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
@@ -91,7 +88,7 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
     public function update(UpdatePostRequest $request, Post $post)
@@ -104,12 +101,17 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
     {
-        // dd($post);
+        /**
+         * if user want to delete another user post
+         */
+        if (auth()->id() !== $post->user_id) {
+            return abort(404);
+        }
 
         $post->delete();
 
