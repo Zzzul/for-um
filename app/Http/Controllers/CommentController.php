@@ -12,9 +12,11 @@ class CommentController extends Controller
 {
     public function store(StoreCommentRequest $request)
     {
+        $post = Post::findOrFail($request->post_id);
+
         $attr = $request->validated();
         $attr['user_id'] = auth()->id();
-        $attr['post_id'] = intval($request->post_id);
+        $attr['post_id'] = $post->id;
 
         $comment = Comment::create($attr);
 
@@ -22,6 +24,6 @@ class CommentController extends Controller
             $comment->post->author->notify(new PostCommentNotification($comment->post, $comment));
         }
 
-        return redirect()->back()->with('success', 'Comment published.');
+        return redirect()->back()->with('success', 'Comment sended.');
     }
 }

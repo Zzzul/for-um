@@ -26,54 +26,57 @@
             </div>
 
             <div class="col-md-8">
-                <table class="table table-hover table-striped">
-                    <thead>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Comments</th>
-                        <th>Created At</th>
-                        <th>Updated At</th>
-                        <th>Action</th>
-                    </thead>
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Comments</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Action</th>
+                        </thead>
 
-                    <tbody>
-                        @forelse ($posts as $post)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>
-                                    <a href="{{ route('post.show', $post->slug) }}">{{ $post->title }}</a>
-                                </td>
-                                <td>{{ Str::limit($post->content, 100) }}</td>
-                                <td>{{ $post->comments_count . ' ' . Str::plural('Comment', $post->comments_count) }}</td>
-                                <td>{{ $post->created_at->diffForHumans() }}</td>
-                                <td>{{ $post->updated_at->diffForHumans() }}</td>
-                                <td>
-                                    <a href="{{ route('post.edit', $post->slug) }}"
-                                        class="btn btn-outline-info btn-sm mb-1">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+                        <tbody>
+                            @forelse ($posts as $post)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        <a href="{{ route('post.show', $post->slug) }}">{{ $post->title }}</a>
+                                    </td>
+                                    <td>{{ Str::limit($post->content, 100) }}</td>
+                                    <td>{{ $post->comments_count . ' ' . Str::plural('Comment', $post->comments_count) }}
+                                    </td>
+                                    <td>{{ $post->created_at->diffForHumans() }}</td>
+                                    <td>{{ $post->updated_at->diffForHumans() }}</td>
+                                    <td>
+                                        <a href="{{ route('post.edit', $post->slug) }}"
+                                            class="btn btn-outline-info btn-sm mb-1">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
 
-                                    {{-- <a href="#" data-id={{ $post->slug }} class="btn btn-danger delete"
+                                        {{-- <a href="#" data-id={{ $post->slug }} class="btn btn-danger delete"
                                         data-toggle="modal" data-target="#deleteModal">Delete</a> --}}
 
-                                    <form action="{{ route('post.destroy', $post->slug) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="hidden" name="slug" value="{{ $post->slug }}">
-                                        <button type="submit" class="btn btn-outline-danger btn-sm">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="5" class="text-center">Posts not found.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+                                        <form action="{{ route('post.destroy', $post->slug) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" name="slug" value="{{ $post->slug }}">
+                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center">Posts not found.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -94,6 +97,7 @@
                     <form action="{{ route('post.destroy', '1') }}" method="post">
                         @csrf
                         @method('DELETE')
+
                         <input id="id" name="id" type="hidden">
 
                         <h5>Are you sure you want to delete this post?</h5>

@@ -24,6 +24,12 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
+Route::get('/test', function () {
+    $post = App\Models\Post::get()->count();
+
+    dd($post);
+});
+
 Route::resource('post', PostController::class);
 
 Route::resource('comment', CommentController::class);

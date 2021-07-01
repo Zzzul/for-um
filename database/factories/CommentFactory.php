@@ -24,12 +24,18 @@ class CommentFactory extends Factory
     public function definition()
     {
         $user = User::factory()->create();
-        $post = Post::factory()->create();
+        // $post = Post::factory()->create();
+
+        $post = Post::get()->count();
+        if ($post < 1) {
+            $newPost = Post::factory()->create();
+            $post = $newPost->id;
+        }
 
         return [
             'user_id' => $user->id,
-            'post_id' => $post->id,
-            'body' => $this->faker->paragraph(2)
+            'post_id' => rand(1, $post),
+            'body' => $this->faker->paragraph(3)
         ];
     }
 }
