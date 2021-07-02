@@ -24,13 +24,13 @@ class PostFactory extends Factory
     public function definition()
     {
         $user = User::factory()->create();
-        $title = $this->faker->sentence(15);
+        $title = $this->faker->sentence(rand(1, 15));
 
         return [
             'user_id' => $user->id,
             'title' => $title,
-            'slug' => Str::slug($title) . ' ' . Str::random(5),
-            'content' => $this->faker->paragraph(10)
+            'slug' => Str::slug($title . ' ' . Str::random(5)),
+            'content' => $this->faker->paragraph(rand(1, 12))
         ];
     }
 }

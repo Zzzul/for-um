@@ -79,7 +79,7 @@ class ReplyController extends Controller
 
         $reply->update($attr);
 
-        return redirect()->back()->with('success', 'Reply updated.');
+        return redirect()->route('post.show', $reply->comment->post->slug)->with('success', 'Reply updated.');
     }
 
     /**

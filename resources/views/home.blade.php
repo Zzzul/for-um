@@ -6,7 +6,13 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h4>All Posts</h4>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Home</li>
+                    </ol>
+                </nav>
+
+                <h4 class="mt-3">All Posts</h4>
             </div>
 
             @forelse ($posts as $post)

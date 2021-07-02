@@ -27,14 +27,14 @@ class ReplyFactory extends Factory
 
         $comment = Comment::get()->count();
         if ($comment < 1) {
-            $newComment = comment::factory()->create();
+            $newComment = comment::factory()->count(10)->create();
             $comment = $newComment->id;
         }
 
         return [
             'user_id' => $user->id,
             'comment_id' => rand(1, $comment),
-            'body' => $this->faker->paragraph(4)
+            'body' => $this->faker->paragraph(rand(1, 5))
         ];
     }
 }

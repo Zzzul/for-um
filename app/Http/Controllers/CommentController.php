@@ -39,8 +39,11 @@ class CommentController extends Controller
 
         $comment = Comment::create($attr);
 
+        /**
+         * only send notification when user commented another user comments.
+         */
         if ($comment->post->author->id != auth()->id()) {
-            $comment->post->author->notify(new PostCommentNotification($comment->post, $comment));
+            $comment->post->author->notify(new PostCommentNotification($post, $comment));
         }
 
         return redirect()->back()->with('success', 'Comment sended.');
@@ -75,7 +78,7 @@ class CommentController extends Controller
     {
         $comment->update($request->validated());
 
-        return redirect()->back()->with('success', 'Comment updated.');
+        return redirect()->route('post.show', $comment->post->slug)->with('success', 'Comment updated.');
     }
 
     /**

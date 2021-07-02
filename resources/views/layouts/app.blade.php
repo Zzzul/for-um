@@ -64,13 +64,13 @@
                             <a class="nav-link" href="{{ route('post.index') }}">{{ __('Posts') }}</a>
                         </li>
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="{{ route('comment.index') }}">{{ __('Comments') }}</a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('reply.index') }}">{{ __('Replies') }}</a>
-                        </li>
+                        </li> --}}
 
                         <!-- Authentication Links -->
                         @guest
@@ -95,7 +95,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                 document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

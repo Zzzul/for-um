@@ -56,10 +56,8 @@
                                             <i class="fas fa-edit"></i>
                                         </a>
 
-                                        {{-- <a href="#" data-id={{ $post->slug }} class="btn btn-danger delete"
-                                        data-toggle="modal" data-target="#deleteModal">Delete</a> --}}
-
-                                        <form action="{{ route('post.destroy', $post->slug) }}" method="POST">
+                                        <form action="{{ route('post.destroy', $post->slug) }}" method="POST"
+                                            onsubmit="return confirm('Are you sure want to delete this post?')">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" name="slug" value="{{ $post->slug }}">
@@ -80,44 +78,4 @@
             </div>
         </div>
     </div>
-
-
-    <!-- Delete Warning Modal -->
-    <div class="modal modal-danger fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="Delete"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete Post</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('post.destroy', '1') }}" method="post">
-                        @csrf
-                        @method('DELETE')
-
-                        <input id="id" name="id" type="hidden">
-
-                        <h5>Are you sure you want to delete this post?</h5>
-
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-
-                        <button type="submit" class="btn btn-sm btn-danger">Yes, Delete Post</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
-
-@section('script')
-<script>
-    $(document).on('click', '.delete', function() {
-        let id = $(this).attr('data-id');
-        $('#id').val(id);
-        console.log(id);
-    });
-</script>
 @endsection

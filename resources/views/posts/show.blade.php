@@ -118,10 +118,11 @@
                                             </a>
 
                                             <form action="{{ route('comment.destroy', $comment->id) }}" method="POST"
-                                                class="float-right">
+                                                class="float-right"
+                                                onsubmit="return confirm('Are you sure want to delete this comment?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-outline-danger  btn-sm">
+                                                <button type="submit" class="btn btn-outline-danger  btn-sm">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </form>
@@ -196,10 +197,11 @@
                                                             </a>
 
                                                             <form action="{{ route('reply.destroy', $reply->id) }}"
-                                                                method="POST" class="float-right">
+                                                                method="POST" class="float-right"
+                                                                onsubmit="return confirm('Are you sure want to delete this reply?')">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button class="btn btn-outline-danger btn-sm">
+                                                                <button type="submit" class="btn btn-outline-danger btn-sm">
                                                                     <i class="fas fa-trash-alt"></i>
                                                                 </button>
                                                             </form>
@@ -207,15 +209,10 @@
                                                     @endif
                                                 </div>
                                             </div>
-
-
-
                                         @endforeach
                                     </div>
                                 </div>
-
                                 <hr>
-
                             </div>
                         @empty
                             <p class="font-weight-bold text-secondary mb-0 text-center">
