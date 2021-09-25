@@ -22,9 +22,11 @@
                                 <p class="mb-0">
                                     Your post
                                     <span class="font-weight-bold">
-                                        {{ $notification->data['post']['title'] }}</span>
+                                        {{ Str::limit($notification->data['post']['title'], 75) }}</span>
                                     received a new comments - {{ $notification->created_at->diffForHumans() }}
                                 </p>
+
+                                {{-- <a href="/post/{{ $notification->data['post']['slug'] . '#' . $notification->data['comment']['id'] }}" --}}
 
                                 <a href="{{ route('notification.markAsRead', ['id' => $notification->id, 'slug' => $notification->data['post']['slug']]) }}"
                                     class="{{ $notification->read_at ? 'text-dark' : '' }}">
@@ -32,7 +34,7 @@
                                         {{ $notification->data['comment']['user']['name'] }}
                                     </span>
                                     -
-                                    {{ $notification->data['comment']['body'] }}
+                                    {{ Str::limit($notification->data['comment']['body'], 300) }}
                                 </a>
                             </li>
                         @else
@@ -41,7 +43,7 @@
                                 <p class="mb-0">
                                     Your comment
                                     <span class="font-weight-bold">
-                                        {{ $notification->data['comment']['body'] }}</span>
+                                        {{ Str::limit($notification->data['comment']['body'], 75) }}</span>
                                     received a new reply - {{ $notification->created_at->diffForHumans() }}
                                 </p>
 
@@ -51,7 +53,7 @@
                                         {{ $notification->data['reply']['user']['name'] }}
                                     </span>
                                     -
-                                    {{ $notification->data['reply']['body'] }}
+                                    {{ Str::limit($notification->data['reply']['body'], 300) }}
                                 </a>
                             </li>
                         @endif

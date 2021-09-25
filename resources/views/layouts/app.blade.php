@@ -48,10 +48,7 @@
                                 <a href="{{ route('notification') }}" class="nav-link">
                                     <span class="badge badge-secondary">
                                         {{ auth()->user()->unreadNotifications->count() }}
-                                        {{ Str::plural(
-    'Notification',
-    auth()->user()->unreadNotifications->count(),
-) }}
+                                        {{ Str::plural('Notification', auth()->user()->unreadNotifications->count()) }}
                                     </span>
                                 </a>
                             </li>
@@ -64,14 +61,14 @@
                             <a class="nav-link" href="{{ route('post.index') }}">{{ __('Posts') }}</a>
                         </li>
 
-                        {{-- <li class="nav-item">
+                        {{-- <li i class="nav-item">
                             <a class="nav-link" href="{{ route('comment.index') }}">{{ __('Comments') }}</a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('reply.index') }}">{{ __('Replies') }}</a>
                         </li> --}}
-
+                        
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))

@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::withCount('comments')->where('user_id', auth()->id())->orderByDesc('created_at')->get();
+        $posts = Post::where('user_id', auth()->id())->orderByDesc('created_at')->get();
 
         return view('posts.index', compact('posts'));
     }

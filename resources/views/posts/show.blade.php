@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $post->author->name . ' - ' . $post->title)
+@section('title', $post->title)
 
 @section('content')
     <div class="container">
@@ -95,7 +95,7 @@
                 <div class="card">
                     <div class="card-body">
                         @forelse ($post->comments as $comment)
-                            <div class="mb-2">
+                            <div class="my-2 p-2" id="comment-{{ $comment->id }}">
                                 <div class="d-flex justify-content-between mb-0">
                                     <p class="mb-0">
                                         <span class="font-weight-bold">
@@ -144,7 +144,7 @@
                                     </p>
                                 </div>
 
-                                <div class=" collapse mt-2" id="collapseReply-{{ $comment->id }}">
+                                <div class="mt-2 collapse" id="collapseReply-{{ $comment->id }}">
                                     <form action="{{ route('reply.store') }}" method="POST">
                                         @csrf
                                         @method('POST')
@@ -153,7 +153,6 @@
 
                                         <div class="form-group mb-2">
                                             <textarea class="form-control @error('reply') is-invalid @enderror" name="reply"
-                                                id="reply"
                                                 placeholder="{{ auth()->check() ? 'Nice comment bro!' : 'You must be login.' }}"
                                                 autofocus @guest disabled @endguest>{{ old('reply') }}</textarea>
                                             @error('reply')
@@ -173,7 +172,8 @@
                                         @foreach ($comment->replies as $reply)
                                             <hr class="ml-4 mt-0">
 
-                                            <div class="d-flex justify-content-between mb-0">
+                                            <div class="d-flex justify-content-between mb-0 p-2"
+                                                id="reply-{{ $reply->id }}">
                                                 <div>
                                                     <span class="font-weight-bold ml-4">{{ $reply->user->name }}</span> -
                                                     {{ $reply->created_at->diffForHumans() }}
@@ -182,12 +182,12 @@
                                                         {{ $reply->created_at != $reply->updated_at ? '(edited)' : '' }}
                                                     </small>
 
-                                                    <p class="ml-4">{{ $reply->body }}
-                                                    </p>
+                                                    <p class="ml-4">{{ $reply->body }}</p>
                                                 </div>
 
-                                                <div>
-                                                    @if (auth()->id() === $reply->user_id)
+
+                                                @if (auth()->id() === $reply->user_id)
+                                                    <div>
                                                         <span>
                                                             <a href="{{ route('reply.edit', $reply->id) }}"
                                                                 class="float-left mr-1">
@@ -206,8 +206,8 @@
                                                                 </button>
                                                             </form>
                                                         </span>
-                                                    @endif
-                                                </div>
+                                                    </div>
+                                                @endif
                                             </div>
                                         @endforeach
                                     </div>
@@ -216,7 +216,7 @@
                             </div>
                         @empty
                             <p class="font-weight-bold text-secondary mb-0 text-center">
-                                This post doesnt have comment.
+                                This post dont have any comment.
                             </p>
                         @endforelse
                     </div>
@@ -224,4 +224,40 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        const commentId = getQueryParams('comment')
+        const replyId = getQueryParams('reply') ? getQueryParams('reply') : null
+
+        const commentElement = document.getElementById('comment-' + commentId)
+        const collapseReply = document.getElementById('collapseReply-' + commentId)
+        const replyElement = document.getElementById('reply-' + replyId)
+
+        if (replyId === null) {
+            headlineElement(commentElement)
+        } else {
+            collapseReply.classList.add('show')
+            headlineElement(replyElement)
+        }
+
+        function getQueryParams(name) {
+            return (location.search.split(name + '=')[1] || '').split('&')[0];
+        }
+
+        function headlineElement(element) {
+            element.style.backgroundColor = '#f7f7f7'
+            element.style.border = '1px solid #158cba'
+            element.style.borderRadius = '5px'
+
+            element.addEventListener('mouseover', function() {
+                setInterval(() => {
+                    this.style.backgroundColor = 'white'
+                    this.style.border = '0'
+                    this.style.borderRadius = '0'
+                }, 1000)
+            })
+        }
+    </script>
 @endsection

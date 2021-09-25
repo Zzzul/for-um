@@ -47,9 +47,9 @@ class PostCommentNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
             ->subject('New Comment Added')
-            ->line('A new comment to your post -' . $this->post->title)
-            ->line('Comment:')
-            ->line($this->comment->user->name . ' - ' . $this->comment->body)
+            ->line('Your post received a new comments - ' . $this->post->title)
+            ->line('Commented by: ' . $this->comment->user->name)
+            ->line($this->comment->body)
             ->action('View post', route('post.show', $this->post->slug))
             ->line('Thank you for using our application!');
     }
