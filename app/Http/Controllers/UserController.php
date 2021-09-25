@@ -36,16 +36,18 @@ class UserController extends Controller
 
         // dd($notification->data);
 
-        if($notification->type == 'App\Notifications\PostCommentNotification'){
-           return redirect()->route('post.show', 
+        if ($notification->type == 'App\Notifications\PostCommentNotification') {
+            return redirect()->route(
+                'post.show',
                 $post->slug . '?comment=' . $notification->data['comment']['id']
             );
-        }else{
-           return redirect()->route('post.show', 
+        } else {
+            return redirect()->route(
+                'post.show',
                 $post->slug . '?comment=' . $notification->data['comment']['id']
-                . '&reply=' . $notification->data['reply']['id']
+                    . '&reply=' . $notification->data['reply']['id']
             );
         }
-         // return redirect()->route('post.show', $post->slug . '#' . $notification->data['comment']['id']);
+        // return redirect()->route('post.show', $post->slug . '#' . $notification->data['comment']['id']);
     }
 }
