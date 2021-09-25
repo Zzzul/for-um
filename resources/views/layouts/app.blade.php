@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    @yield('trix-editor')
 </head>
 
 <body>
@@ -34,8 +36,8 @@
                     {{ config('app.name', 'Laravel') }}
                 </a>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -48,7 +50,10 @@
                                 <a href="{{ route('notification') }}" class="nav-link">
                                     <span class="badge badge-secondary">
                                         {{ auth()->user()->unreadNotifications->count() }}
-                                        {{ Str::plural('Notification', auth()->user()->unreadNotifications->count()) }}
+                                        {{ Str::plural(
+    'Notification',
+    auth()->user()->unreadNotifications->count(),
+) }}
                                     </span>
                                 </a>
                             </li>
@@ -68,7 +73,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('reply.index') }}">{{ __('Replies') }}</a>
                         </li> --}}
-                        
+
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -91,12 +96,12 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                                                                                                                                                                                                     document.getElementById('logout-form').submit();">
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        class="d-none">
                                         @csrf
                                     </form>
                                 </div>

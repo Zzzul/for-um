@@ -47,10 +47,9 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $attr = $request->validated();
-        $attr['user_id'] = auth()->id();
         $attr['slug'] = Str::slug($request->title . ' ' . Str::random(5));
 
-        Post::create($attr);
+        auth()->user()->posts()->create($attr);
 
         return redirect()->route('post.index')->with('success', 'Post published.');
     }
