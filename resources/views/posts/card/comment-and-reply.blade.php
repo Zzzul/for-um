@@ -97,7 +97,7 @@
             </div>
         @empty
             <p class="font-weight-bold text-secondary mb-0 text-center">
-                This post dont have any comment.
+                This post does not have any comments
             </p>
         @endforelse
     </div>

@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="card-body">
-                                {{ Str::limit($post->content, 400) }}
+                                {!! Str::limit($post->content, 400) !!}
                             </div>
                         </div>
                     </a>
