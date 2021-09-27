@@ -55,12 +55,7 @@ class ReplyController extends Controller
      */
     public function edit(Reply $reply)
     {
-        /**
-         * if user want to edit edit user reply
-         */
-        if (auth()->id() !== $reply->user_id) {
-            return abort(404);
-        }
+        $this->authorize('view', $reply);
 
         return view('replies.edit', compact('reply'));
     }
@@ -74,6 +69,8 @@ class ReplyController extends Controller
      */
     public function update(UpdateReplyRequest $request, Reply $reply)
     {
+        $this->authorize('update', $reply);
+
         $attr = $request->validated();
         $attr['body'] = $request->reply;
 
@@ -90,12 +87,7 @@ class ReplyController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        /**
-         * if user want to edit delete user reply
-         */
-        if (auth()->id() !== $reply->user_id) {
-            return abort(404);
-        }
+        $this->authorize('delete', $reply);
 
         $reply->delete();
 

@@ -73,12 +73,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        /**
-         * if user want to edit another user post
-         */
-        if (auth()->id() !== $post->user_id) {
-            return abort(404);
-        }
+        $this->authorize('view', $post);
 
         return view('posts.edit', compact('post'));
     }
@@ -92,6 +87,8 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $post->update($request->validated());
 
         return redirect()->route('post.show', $post->slug)->with('success', 'Post updated.');
@@ -105,12 +102,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        /**
-         * if user want to delete another user post
-         */
-        if (auth()->id() !== $post->user_id) {
-            return abort(404);
-        }
+        $this->authorize('delete', $post);
 
         $post->delete();
 

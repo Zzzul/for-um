@@ -32,8 +32,8 @@
                                     </span>
                                 </small>
 
-                                <small
-                                    class="float-right text-secondary">{{ $post->comments_count . ' ' . Str::plural('Comment', $post->comments_count) }}
+                                <small class="float-right text-secondary">
+                                    {{ $post->comments_count . ' ' . Str::plural('Comment', $post->comments_count) }}
                                 </small>
 
                                 <br>
