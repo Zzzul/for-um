@@ -25,7 +25,7 @@
 @endauth
 
 @guest
-    <p class="font-weight-bold text-secondary mb-0 text-center">
-        You must be <a href="/login">logged in</a> to write a comment.
+    <p class="font-weight-bold text-secondary mb-3 text-center">
+        You must be <a href="/login?goto={{ $post->slug }}">logged in</a> to write a comment.
     </p>
 @endguest

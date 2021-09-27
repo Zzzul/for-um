@@ -5,7 +5,7 @@
                 @csrf
                 @method('POST')
 
-                <input type="hidden" name="post_id" value="{{ $post }}">
+                <input type="hidden" name="post_id" value="{{ $post->id }}">
 
                 <div class="form-group">
                     <label for="body">Write Comment</label>
@@ -33,7 +33,7 @@
     <div class="card mt-4">
         <div class="card-body">
             <p class="font-weight-bold text-secondary mb-0 text-center">
-                You must be <a href="/login">logged in</a> to write a comment.
+                You must be <a href="/login?goto={{ $post->slug }}">logged in</a> to write a comment.
             </p>
         </div>
     </div>

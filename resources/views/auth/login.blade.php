@@ -17,8 +17,11 @@
                     <div class="card-header">{{ __('Login') }}</div>
 
                     <div class="card-body">
+
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
+
+                            <input type="hidden" name="goto" value="{{ request()->query('goto') }}">
 
                             <div class="form-group row">
                                 <label for="email"

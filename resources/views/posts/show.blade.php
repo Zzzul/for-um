@@ -25,7 +25,7 @@
 
                 @include('posts.card.post-content', ['post' => $post])
 
-                @include('posts.form.comment', ['post' => $post->id])
+                @include('posts.form.comment', ['post' => $post])
 
                 <h4 class="mt-4 mb-2">All Comments</h4>
 

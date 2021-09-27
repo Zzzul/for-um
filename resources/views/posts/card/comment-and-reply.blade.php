@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="mt-2 collapse" id="collapseReply-{{ $comment->id }}">
-                    @include('posts.form.reply', ['comment', $comment->id])
+                    @include('posts.form.reply', ['comment', $comment->id, 'post' => $post])
 
                     <div class="ml-5">
                         @foreach ($comment->replies as $reply)
