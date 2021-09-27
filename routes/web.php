@@ -28,10 +28,10 @@ Route::resource('post', PostController::class);
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('comment', CommentController::class)
-        ->except('index','create', 'show');
+        ->except('create', 'show');
 
     Route::resource('reply', ReplyController::class)
-        ->except('index','create', 'show');
+        ->except('create', 'show');
 
     Route::get('/notification', [UserController::class, 'notification'])
         ->name('notification');

@@ -35,10 +35,10 @@
 
                             <div class="form-group">
                                 <label for="content">Content</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" name="content"
-                                    id="content"
-                                    placeholder="Laravel notification is avaiable for email, database, slack, and many more"
-                                    rows="8">{{ old('content') }}</textarea>
+
+                                <input id="content" value="{{ old('content') }}" type="hidden" name="content">
+                                <trix-editor input="content"></trix-editor>
+
                                 @error('content')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -55,3 +55,6 @@
         </div>
     </div>
 @endsection
+
+
+@include('partials.trix-editor')

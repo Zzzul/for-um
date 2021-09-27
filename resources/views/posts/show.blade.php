@@ -29,7 +29,7 @@
 
                 <h4 class="mt-4 mb-2">All Comments</h4>
 
-                @include('posts.card.comment', ['post' => $post])
+                @include('posts.card.comment-and-reply', ['post' => $post])
             </div>
         </div>
     </div>
@@ -71,20 +71,4 @@
     </script>
 @endsection
 
-@section('trix-editor')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/trix.css') }}">
-    <script type="text/javascript" src="{{ asset('js/trix.js') }}"></script>
-
-    <style>
-        trix-toolbar [data-trix-button-group="file-tools"] {
-            display: none;
-        }
-
-    </style>
-
-    <script>
-        document.addEventListener('trix-file-accept', function(e) {
-            e.preventDefault();
-        })
-    </script>
-@endsection
+@include('partials.trix-editor')

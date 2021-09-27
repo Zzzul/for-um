@@ -29,6 +29,6 @@
     </div>
 
     <div class="card-body">
-        {{ $post->content }}
+        {!! $post->content !!}
     </div>
 </div>

@@ -33,15 +33,9 @@ class CommentController extends Controller
     {
         $post = Post::findOrFail($request->post_id);
 
-        $attr = $request->validated();
-        $attr['user_id'] = auth()->id();
-        $attr['post_id'] = $post->id;
+        $comment = auth()->user()->comments()->create($request->validated());
 
-        $comment = Comment::create($attr);
-
-        /**
-         * only send notification when user commented another user comments.
-         */
+        /** only send notification when user commented another user comments.*/
         if ($comment->post->author->id != auth()->id()) {
             $comment->post->author->notify(new PostCommentNotification($post, $comment));
         }

@@ -14,6 +14,7 @@
 
                 <input id="body" value="{{ old('body') }}" type="hidden" name="body">
                 <trix-editor input="body"></trix-editor>
+
                 @error('body')
                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                 @enderror

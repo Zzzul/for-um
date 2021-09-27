@@ -25,7 +25,7 @@ class StoreReplyRequest extends FormRequest
     {
         return [
             'comment_id' => 'required',
-            'reply' => 'required|string'
+            'reply*' => 'required|string'
         ];
     }
 }

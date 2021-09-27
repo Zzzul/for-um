@@ -2,12 +2,13 @@
     @csrf
     @method('POST')
 
-    <input type="hidden" name="comment_id" value="{{ $comment }}">
+    <input type="hidden" name="comment_id" value="{{ $comment->id }}">
 
     <div class="form-group mb-2">
-        <textarea class="form-control @error('reply') is-invalid @enderror" name="reply"
-            placeholder="{{ auth()->check() ? 'Nice comment bro!' : 'You must be login.' }}" autofocus @guest disabled
-            @endguest>{{ old('reply') }}</textarea>
+        <input id="reply-{{ $comment->id }}" value="{{ old('reply-' . $comment->id) }}" type="hidden"
+            name="reply-{{ $comment->id }}">
+        <trix-editor input="reply-{{ $comment->id }}"></trix-editor>
+
         @error('reply')
             <span class="invalid-feedback" role="alert">{{ $message }}</span>
         @enderror

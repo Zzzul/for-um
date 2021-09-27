@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit comment - ' . $comment->body)
+@section('title', 'Edit comment')
 
 @section('content')
     <div class="container">
@@ -12,11 +12,8 @@
                         <li class="breadcrumb-item">
                             <a href="{{ route('home') }}">Home</a>
                         </li>
-                        <li class="breadcrumb-item">
-                            <a href="{{ route('comment.index') }}">Comment</a>
-                        </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            {{ $comment->body }}
+                            Comment
                         </li>
                     </ol>
                 </nav>
@@ -32,8 +29,10 @@
 
                             <div class="form-group">
                                 <label for="body">Comment</label>
-                                <textarea class="form-control @error('body') is-invalid @enderror" name="body"
-                                    id="body">{{ old('body') ?? $comment->body }}</textarea>
+
+                                <input id="body" value="{{ old('body') ?? $comment->body }}" type="hidden" name="body">
+                                <trix-editor input="body"></trix-editor>
+
                                 @error('body')
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                 @enderror
@@ -50,3 +49,5 @@
         </div>
     </div>
 @endsection
+
+@include('partials.trix-editor')

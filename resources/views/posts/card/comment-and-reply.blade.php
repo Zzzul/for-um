@@ -36,11 +36,11 @@
                     @endif
                 </div>
 
-                <p> {{ $comment->body }}</p>
+                {!! $comment->body !!}
 
                 <div class="d-flex justify-content-between mb-0">
-                    <a data-toggle="collapse" href="#collapseReply-{{ $comment->id }}" aria-expanded="false"
-                        role="button" aria-controls="collapseReply-{{ $comment->id }}">
+                    <a class="mt-2 mb-1" data-toggle="collapse" href="#collapseReply-{{ $comment->id }}"
+                        aria-expanded="false" role="button" aria-controls="collapseReply-{{ $comment->id }}">
                         <i class="fas fa-reply"></i> Reply
                     </a>
 
@@ -65,7 +65,7 @@
                                         {{ $reply->created_at != $reply->updated_at ? '(edited)' : '' }}
                                     </small>
 
-                                    <p class="ml-4">{{ $reply->body }}</p>
+                                    <div class="ml-4">{!! $reply->body !!}</div>
                                 </div>
 
                                 @if (auth()->id() === $reply->user_id)
