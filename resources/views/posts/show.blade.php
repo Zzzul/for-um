@@ -39,10 +39,9 @@
     <script>
         const commentId = getQueryParams('comment')
         const replyId = getQueryParams('reply') ? getQueryParams('reply') : null
-
         const commentElement = document.getElementById('comment-' + commentId)
         const collapseReply = document.getElementById('collapseReply-' + commentId)
-        const replyElement = document.getElementById('reply-' + replyId)
+        const replyElement = document.getElementById('reply-comment-' + replyId)
 
         if (replyId === null) {
             headlineElement(commentElement)
@@ -59,7 +58,6 @@
             element.style.backgroundColor = '#f7f7f7'
             element.style.border = '1px solid #158cba'
             element.style.borderRadius = '5px'
-
             element.addEventListener('mouseover', function() {
                 setInterval(() => {
                     this.style.backgroundColor = 'white'

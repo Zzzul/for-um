@@ -30,7 +30,7 @@ class ReplyController extends Controller
      */
     public function store(StoreReplyRequest $request)
     {
-        $comment = Comment::findOrFail($request->comment_id);
+        $comment = Comment::withOnly('post')->findOrFail($request->comment_id);
 
         $attr = $request->validated();
 

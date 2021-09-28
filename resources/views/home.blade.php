@@ -11,8 +11,33 @@
                         <li class="breadcrumb-item active" aria-current="page">Home</li>
                     </ol>
                 </nav>
+            </div>
 
-                <h4 class="mt-3">All Posts</h4>
+            <div class="col-md-8 mt-3">
+                <form action="/" method="GET" class="row">
+                    <div class="col-md-10 m-0">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="search"
+                                value="{{ request()->query('search') }}"
+                                placeholder="Search post with username, title, or description" autofocus>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button class="btn btn-primary btn-block" type="submit">
+                            <i class="fas fa-search mr-1"></i>
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-8">
+                <hr>
+            </div>
+
+            <div class="col-md-8">
+                <h4 class="mt-2">All Posts</h4>
             </div>
 
             @forelse ($posts as $post)
@@ -50,7 +75,7 @@
             @empty
                 <div class="col-md-8">
                     <div class="alert alert-danger">
-                        The posts is empty.
+                        Posts not found.
                     </div>
                 </div>
             @endforelse

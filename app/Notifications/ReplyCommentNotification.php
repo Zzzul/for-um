@@ -43,6 +43,9 @@ class ReplyCommentNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        // return $this->comment;
+        // die;
+
         return (new MailMessage)
             ->subject('New Reply Notification')
             ->line('Your comment recevied a new reply.')
