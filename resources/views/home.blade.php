@@ -18,8 +18,8 @@
                     <div class="col-md-10 m-0">
                         <div class="form-group">
                             <input type="text" class="form-control" name="search"
-                                value="{{ request()->query('search') }}"
-                                placeholder="Search post with username, title, or description" autofocus>
+                                value="{{ request()->query('search') }}" placeholder="Username, title, or description"
+                                autofocus>
                         </div>
                     </div>
 

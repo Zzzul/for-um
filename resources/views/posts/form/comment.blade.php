@@ -33,7 +33,7 @@
     <div class="card mt-4">
         <div class="card-body">
             <p class="font-weight-bold text-secondary mb-0 text-center">
-                You must be <a href="/login?goto={{ $post->slug }}">logged in</a> to write a comment.
+                You must be <a href="/login?goto={{ $post->slug }}">login</a> to post a comment.
             </p>
         </div>
     </div>
