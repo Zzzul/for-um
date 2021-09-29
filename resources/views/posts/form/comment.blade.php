@@ -8,7 +8,7 @@
                 <input type="hidden" name="post_id" value="{{ $post->id }}">
 
                 <div class="form-group">
-                    <label for="body">Write Comment</label>
+                    <label for="body">Comment</label>
 
                     <input id="body" value="{{ old('body') }}" type="hidden" name="body">
                     <trix-editor input="body"></trix-editor>

@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('user_id', auth()->id())->orderByDesc('created_at')->get();
+        $posts = Post::with('author')->withCount('comments')->where('user_id', auth()->id())->orderByDesc('created_at')->get();
 
         return view('posts.index', compact('posts'));
     }
@@ -62,7 +62,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        $post->load('votes', 'comments')->loadCount('votes', 'up_votes', 'down_votes', 'comments');
+
+        $hasVotes = $post::hasVotes($post->id);
+
+        return view('posts.show', compact('post', 'hasVotes'));
     }
 
     /**

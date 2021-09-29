@@ -7,6 +7,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\VoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/notification/{id}/{slug}', [UserController::class, 'markAsReadNotification'])
         ->name('notification.markAsRead');
+
+    Route::resource('vote', VoteController::class)
+        ->except('create', 'show');
 });
