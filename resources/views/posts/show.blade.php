@@ -3,7 +3,7 @@
 @section('title', $post->title)
 
 @section('content')
-    <div class="container">
+    <div class="container mb-5">
         <div class="row justify-content-center">
             <div class="col-md-8 mb-3">
                 <nav aria-label="breadcrumb">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        {{-- Desktop --}}
+        {{-- Desktop votes --}}
         <div class="d-none d-md-block">
             <div class="row justify-content-center mt-0">
                 <div class="col-md-1">
@@ -77,7 +77,7 @@
             </div>
         </div>
 
-        {{-- Mobile --}}
+        {{-- Mobile votes --}}
         <div class="d-sm-block d-md-none">
             <div class="row justify-content-center mt-0">
                 <div class="col-md-12">

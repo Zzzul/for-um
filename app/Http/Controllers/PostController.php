@@ -62,7 +62,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $post->load('votes', 'comments')->loadCount('votes', 'up_votes', 'down_votes', 'comments');
+        $post->load('comments')->loadCount('up_votes', 'down_votes', 'comments');
 
         $hasVotes = $post::hasVotes($post->id);
 

@@ -41,5 +41,5 @@ Route::middleware(['auth'])->group(function () {
         ->name('notification.markAsRead');
 
     Route::resource('vote', VoteController::class)
-        ->except('create', 'show');
+        ->only('store');
 });

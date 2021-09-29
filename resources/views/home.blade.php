@@ -18,8 +18,7 @@
                     <div class="col-md-10 m-0">
                         <div class="form-group">
                             <input type="text" class="form-control" name="search"
-                                value="{{ request()->query('search') }}" placeholder="Username, title, or description"
-                                autofocus>
+                                value="{{ request()->query('search') }}" placeholder="Username, title, or description">
                         </div>
                     </div>
 
@@ -80,7 +79,7 @@
                 </div>
             @endforelse
 
-            <div class="col-md-8">
+            <div class="col-md-8 mb-5">
                 <div class="d-flex justify-content-center">
                     {{ $posts->links() }}
                 </div>
