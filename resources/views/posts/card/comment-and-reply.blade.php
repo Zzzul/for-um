@@ -56,7 +56,7 @@
                         @foreach ($comment->replies as $reply)
                             <hr class="ml-4 m-0">
 
-                            <div class="d-flex justify-content-between mb-0 p-3"
+                            <div class="d-flex justify-content-between mb-0 py-3 px-0"
                                 id="reply-comment-{{ $reply->id }}">
                                 <div>
                                     <span class="font-weight-bold ml-4">{{ $reply->user->name }}</span> -

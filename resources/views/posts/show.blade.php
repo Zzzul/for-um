@@ -135,8 +135,7 @@
             </div>
         </div>
 
-
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mb-5">
             <div class="col-md-8">
                 @include('posts.form.comment', ['post' => $post])
 

@@ -89,7 +89,7 @@
                 {{-- Mobile register link --}}
                 <div class="d-sm-block d-md-none">
                     <div class="card mt-3">
-                        <div class="card-body text-center p-2">
+                        <div class="card-body text-center pt-2 pb-1">
                             <a class="btn btn-link" href="{{ route('register') }}">
                                 {{ __('Register') }}
                             </a>
