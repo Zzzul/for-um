@@ -25,7 +25,8 @@
                     <div class="col-md-9">
                         <div class="card">
                             <div class="card-body pb-1">
-                                <form action="{{ route('setting.ChangeProfile') }}" method="POST">
+                                <form action="{{ route('setting.ChangeProfile') }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
 
@@ -53,6 +54,36 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col-md-4 text-center">
+                                            @if (auth()->user()->avatar)
+                                                <img src="{{ asset('storage/img/avatar/' . auth()->user()->avatar) }}"
+                                                    alt="Avatar" class="img-fluid rounded"
+                                                    style="width: 100%; height: 100px; object-fit: cover;">
+                                            @else
+                                                <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=' . 150 }}"
+                                                    alt="Avatar" class="img-fluid rounded"
+                                                    style="width: 100%; height: 100px; object-fit: cover;">
+                                            @endif
+
+                                        </div>
+
+
+                                        <div class="col-md-8 mt-1">
+                                            <label for="avatar">Avatar</label>
+                                            <input type="file" name="avatar" id="avatar"
+                                                class="form-control @error('avatar') is-invalid @enderror">
+                                            <small class="text-secondary">Leave it blank if you don't want to be
+                                                replaced.</small>
+
+                                            @error('avatar')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
 
                                     <div class="form-group">

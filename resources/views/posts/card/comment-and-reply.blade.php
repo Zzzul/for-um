@@ -5,6 +5,15 @@
                 <div class="d-flex justify-content-between mb-0">
                     <p class="my-0">
                         <span class="font-weight-bold">
+                            @if ($comment->user->avatar)
+                                <img src="{{ asset('storage/img/avatar/' . $comment->user->avatar) }}" alt="Avatar"
+                                    class="img-fluid rounded-circle"
+                                    style="width: 15px; height: 15px; object-fit: cover;">
+                            @else
+                                <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($comment->user->email))) . '?s=' . 15 }}"
+                                    alt="Avatar" width="15" class="img-fluid rounded-circle">
+                            @endif
+
                             {{ $comment->user->name }}
 
                         </span>
@@ -59,7 +68,18 @@
                             <div class="d-flex justify-content-between mb-0 py-3 px-0"
                                 id="reply-comment-{{ $reply->id }}">
                                 <div>
-                                    <span class="font-weight-bold ml-4">{{ $reply->user->name }}</span> -
+                                    <span class="font-weight-bold ml-4">
+                                        @if ($reply->user->avatar)
+                                            <img src="{{ asset('storage/img/avatar/' . $reply->user->avatar) }}"
+                                                alt="Avatar" class="img-fluid rounded-circle"
+                                                style="width: 15px; height: 15px; object-fit: cover;">
+                                        @else
+                                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($reply->user->email))) . '?s=' . 15 }}"
+                                                alt="Avatar" width="15" class="img-fluid rounded-circle">
+                                        @endif
+
+                                        {{ $reply->user->name }}
+                                    </span> -
                                     {{ $reply->created_at->diffForHumans() }}
 
                                     <small class="text-secondary">

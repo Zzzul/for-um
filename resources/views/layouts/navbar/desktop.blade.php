@@ -56,8 +56,15 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=' . 20 }}"
-                                    alt="Avatar" width="20" class="img-fluid rounded-circle mr-1">
+                                @if (auth()->user()->avatar)
+                                    <img src="{{ asset('storage/img/avatar/' . auth()->user()->avatar) }}" alt="Avatar"
+                                        class="img-fluid rounded-circle mr-1"
+                                        style="width: 20px; height: 20px; object-fit: cover;">
+                                @else
+                                    <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=' . 20 }}"
+                                        alt="Avatar" width="20" class="img-fluid rounded-circle mr-1">
+                                @endif
+
                                 {{ Auth::user()->name }}
                             </a>
 

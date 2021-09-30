@@ -9,15 +9,6 @@ use Illuminate\Http\Request;
 
 class VoteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -47,39 +38,5 @@ class VoteController extends Controller
         }
 
         return redirect()->back()->with('success', 'Vote saved.');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Votes  $votes
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Votes $votes)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Votes  $votes
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Votes $votes)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Votes  $votes
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Votes $votes)
-    {
-        //
     }
 }

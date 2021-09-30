@@ -46,6 +46,15 @@
                             <div class="card-header">
                                 <small>
                                     <span class="font-weight-bold">
+                                        @if ($post->author->avatar)
+                                            <img src="{{ asset('storage/img/avatar/' . $post->author->avatar) }}"
+                                                alt="Avatar" class="img-fluid rounded-circle"
+                                                style="width: 16px; height: 16px; object-fit: cover;">
+                                        @else
+                                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($post->author->email))) . '?s=' . 15 }}"
+                                                alt="Avatar" width="15" class="img-fluid rounded-circle">
+                                        @endif
+
                                         {{ $post->author->name }}
                                         -
                                         {{ $post->created_at->diffForHumans() }}

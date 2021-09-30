@@ -1,7 +1,7 @@
-<div class="d-md-none d-lg-none d-xl-none py-1 px-0 mt-4">
-    <nav class="navbar navbar-dark bg-primary navbar-expand fixed-bottom">
+<div class="d-md-none d-lg-none d-xl-none p-0 mt-4">
+    <nav class="navbar navbar-dark bg-primary navbar-expand fixed-bottom p-0">
         <ul class="navbar-nav nav-justified w-100">
-            <li class="nav-item">
+            <li class="nav-item mt-1">
                 <a href="{{ route('post.index') }}"
                     class="nav-link text-center{{ request()->routeIs('post.*') ? ' active' : '' }}">
                     <svg width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -17,7 +17,7 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item mt-1">
                 <a href="{{ route('home') }}"
                     class="nav-link text-center{{ request()->routeIs('home*') ? ' active' : '' }}">
                     <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-house" fill="currentColor"
@@ -32,14 +32,19 @@
             </li>
 
             @auth
-                <li class="nav-item dropup">
+                <li class="nav-item mt-1 dropup">
                     <a href="#"
                         class="nav-link text-center{{ request()->routeIs('notification') || request()->routeIs('setting.*') ? ' active' : '' }}"
                         role="button" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false">
 
-                        <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=' . 20 }}"
-                            alt="Avatar" width="28" class="img-fluid rounded-circle mr-1">
+                        @if (auth()->user()->avatar)
+                            <img src="{{ asset('storage/img/avatar/' . auth()->user()->avatar) }}" alt="Avatar"
+                                class="img-fluid rounded-circle" style="width: 20px; height: 20px; object-fit: cover;">
+                        @else
+                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=' . 20 }}"
+                                alt="Avatar" width="27" class="img-fluid rounded-circle">
+                        @endif
 
                         <span class="mt-1 mb-0 small d-block">Profile</span>
                     </a>
@@ -67,7 +72,7 @@
             @endauth
 
             @guest
-                <li class="nav-item">
+                <li class="nav-item mt-1">
                     <a href="{{ route('login') }}"
                         class="nav-link text-center{{ request()->routeIs('login') ? ' active' : '' }}">
                         <svg width="1.5em" height="1.5em" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
