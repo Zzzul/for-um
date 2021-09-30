@@ -85,6 +85,7 @@
                 </div>
 
                 <div class="col-md-12 mt-3">
+                    <h4 class="mt-1">Votes</h4>
                     <div class="card">
                         <div class="card-body py-1 px-5 d-flex justify-content-between">
                             <div class="ml-5">
@@ -137,6 +138,9 @@
 
         <div class="row justify-content-center mb-5">
             <div class="col-md-8">
+                <h4 class="mt-4">
+                    Post a Comment
+                </h4>
                 @include('posts.form.comment', ['post' => $post])
 
                 <h4 class="mt-4 mb-2">All Comments</h4>
