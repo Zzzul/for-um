@@ -57,27 +57,33 @@
                                     </div>
 
                                     <div class="row form-group">
-                                        <div class="col-md-4 text-center">
+                                        <div class="col-md-4 text-center mb-1">
                                             @if (auth()->user()->avatar)
                                                 <img src="{{ asset('storage/img/avatar/' . auth()->user()->avatar) }}"
                                                     alt="Avatar" class="img-fluid rounded"
-                                                    style="width: 100%; height: 100px; object-fit: cover;">
+                                                    style="width: 100%; height: 99px; object-fit: cover;">
                                             @else
                                                 <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=' . 150 }}"
                                                     alt="Avatar" class="img-fluid rounded"
                                                     style="width: 100%; height: 100px; object-fit: cover;">
                                             @endif
-
                                         </div>
 
+                                        <div class="col-md-8">
+                                            <label for="avatar">
+                                                Avatar
+                                                <small class="text-secondary">(Leave it blank if you don't want to be
+                                                    replaced)</small>
+                                            </label>
+                                            <input type="file" id="avatar"
+                                                class="form-control @error('avatar') is-invalid @enderror" disabled>
 
-                                        <div class="col-md-8 mt-1">
-                                            <label for="avatar">Avatar</label>
-                                            <input type="file" name="avatar" id="avatar"
-                                                class="form-control @error('avatar') is-invalid @enderror">
-                                            <small class="text-secondary">Leave it blank if you don't want to be
-                                                replaced.</small>
-
+                                            <small class="text-secondary">
+                                                To try uploading a file, please <a href="https://github.com/Zzzul/for-um"
+                                                    target="blank">install it on your local
+                                                    machine</a> because
+                                                Heroku doesn't support uploading files.
+                                            </small>
                                             @error('avatar')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>

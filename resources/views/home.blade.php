@@ -18,7 +18,8 @@
                     <div class="col-md-10 m-0">
                         <div class="form-group">
                             <input type="text" class="form-control" name="search"
-                                value="{{ request()->query('search') }}" placeholder="Username, title, or description">
+                                value="{{ request()->query('search') }}"
+                                placeholder="Username, title, or description (case sensitive)">
                         </div>
                     </div>
 
