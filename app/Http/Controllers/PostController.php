@@ -77,6 +77,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        abort_if($post->id == 1, 403, 'THIS ACTION IS UNAUTHORIZED.');
+
         $this->authorize('view', $post);
 
         return view('posts.edit', compact('post'));
@@ -106,6 +108,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        abort_if($post->id == 1, 403, 'THIS ACTION IS UNAUTHORIZED.');
+
         $this->authorize('delete', $post);
 
         $post->delete();

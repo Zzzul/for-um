@@ -76,7 +76,7 @@
                             </div>
 
                             <div class="card-body">
-                                {!! Str::limit($post->content, 400) !!}
+                                {!! $post->content !!}
                             </div>
                         </div>
                     </a>

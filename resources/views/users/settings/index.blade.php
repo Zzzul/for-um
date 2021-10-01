@@ -18,6 +18,13 @@
 
             {{-- Profile --}}
             <div class="col-md-8 mt-3">
+                @if (auth()->check() && auth()->user()->email == 'demo@mail.com' ? 'disabled' : '')
+                    <div class="alert alert-warning mb-4">
+                        Demo account can't change profile information or password.
+                    </div>
+                @endif
+
+
                 <div class="row">
                     <div class="col-md-3">
                         <h4>Profile</h5>
@@ -34,7 +41,8 @@
                                         <label for="name">Name</label>
                                         <input id="name" type="text" name="name"
                                             value="{{ old('name') ?? auth()->user()->name }}" autocomplete="name"
-                                            class="form-control @error('name') is-invalid @enderror" required>
+                                            class="form-control @error('name') is-invalid @enderror" required
+                                            {{ auth()->check() && auth()->user()->email == 'demo@mail.com' ? 'disabled' : '' }}>
 
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -47,7 +55,8 @@
                                         <label for="email">Email</label>
                                         <input id="email" type="email" name="email"
                                             value="{{ old('email') ?? auth()->user()->email }}" autocomplete="email"
-                                            class="form-control @error('email') is-invalid @enderror">
+                                            class="form-control @error('email') is-invalid @enderror"
+                                            {{ auth()->check() && auth()->user()->email == 'demo@mail.com' ? 'disabled' : '' }}>
 
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -75,6 +84,7 @@
                                                 <small class="text-secondary">(Leave it blank if you don't want to be
                                                     replaced)</small>
                                             </label>
+
                                             <input type="file" id="avatar"
                                                 class="form-control @error('avatar') is-invalid @enderror" disabled>
 
@@ -93,7 +103,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary"
+                                            {{ auth()->check() && auth()->user()->email == 'demo@mail.com' ? 'disabled' : '' }}>
                                             Update
                                         </button>
                                     </div>
@@ -124,7 +135,8 @@
                                         <label for="current_password">Current Password</label>
                                         <input id="current_password" type="password"
                                             class="form-control @error('current_password') is-invalid @enderror"
-                                            name="current_password">
+                                            name="current_password"
+                                            {{ auth()->check() && auth()->user()->email == 'demo@mail.com' ? 'disabled' : '' }}>
 
                                         @error('current_password')
                                             <span class="invalid-feedback" role="alert">
@@ -138,7 +150,8 @@
 
                                         <input id="password" type="password"
                                             class="form-control @error('password') is-invalid @enderror" name="password"
-                                            required autocomplete="new-password">
+                                            required autocomplete="new-password"
+                                            {{ auth()->check() && auth()->user()->email == 'demo@mail.com' ? 'disabled' : '' }}>
 
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
@@ -150,7 +163,8 @@
                                     <div class="form-group">
                                         <label for="password-confirm">Confirm Password</label>
                                         <input id="password-confirm" type="password" class="form-control"
-                                            name="password_confirmation" required autocomplete="new-password">
+                                            name="password_confirmation" required autocomplete="new-password"
+                                            {{ auth()->check() && auth()->user()->email == 'demo@mail.com' ? 'disabled' : '' }}>
 
                                         @error('password_confirmation')
                                             <span class="invalid-feedback" role="alert">
@@ -160,7 +174,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary"
+                                            {{ auth()->check() && auth()->user()->email == 'demo@mail.com' ? 'disabled' : '' }}>
                                             Update
                                         </button>
                                     </div>

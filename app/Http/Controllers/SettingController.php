@@ -14,6 +14,10 @@ class SettingController extends Controller
 
     public function changeProfile(Request $request)
     {
+        if (auth()->user()->email == 'demo@mail.com') {
+            return redirect()->back()->with('error', 'You are used demo account.');
+        }
+
         $request->validate([
             'name' => 'required|string|min:5|max:50',
             'email' => 'required|email|unique:users,email,' . auth()->id()
@@ -29,6 +33,10 @@ class SettingController extends Controller
 
     public function changePassword(Request $request)
     {
+        if (auth()->user()->email == 'demo@mail.com') {
+            return redirect()->back()->with('error', 'You are used demo account.');
+        }
+
         $request->validate([
             'current_password' => 'required',
             'password' => 'required|min:5|same:password_confirmation',

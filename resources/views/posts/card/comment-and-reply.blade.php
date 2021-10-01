@@ -26,10 +26,9 @@
 
                     @if (auth()->id() === $comment->user_id)
                         <span>
-                            <a href="{{ route('comment.edit', $comment->id) }}" class="float-left mr-1">
-                                <button class="btn btn-outline-info btn-sm">
-                                    <i class="fas fa-edit"></i>
-                                </button>
+                            <a href="{{ route('comment.edit', $comment->id) }}"
+                                class="float-left mr-1 btn btn-outline-info btn-sm{{ $comment->id == 1 ? ' disabled' : '' }}">
+                                <i class="fas fa-edit"></i>
                             </a>
 
                             <form action="{{ route('comment.destroy', $comment->id) }}" method="POST"
@@ -37,7 +36,9 @@
                                 onsubmit="return confirm('Are you sure want to delete this comment?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger  btn-sm">
+                                <button type="submit"
+                                    class="btn btn-outline-danger btn-sm{{ $comment->id == 1 ? ' disabled' : '' }}"
+                                    {{ $comment->id == 1 ? 'disabled' : '' }}>
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>

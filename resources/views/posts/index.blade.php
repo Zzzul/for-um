@@ -50,7 +50,7 @@
                                     <td>{{ $post->updated_at->diffForHumans() }}</td>
                                     <td>
                                         <a href="{{ route('post.edit', $post->slug) }}"
-                                            class="btn btn-outline-info btn-sm mb-1">
+                                            class="btn btn-outline-info btn-sm mb-1{{ $post->id == 1 ? ' disabled' : '' }}">
                                             <i class="fas fa-edit"></i>
                                         </a>
 
@@ -58,8 +58,12 @@
                                             onsubmit="return confirm('Are you sure want to delete this post?')">
                                             @csrf
                                             @method('DELETE')
+
                                             <input type="hidden" name="slug" value="{{ $post->slug }}">
-                                            <button type="submit" class="btn btn-outline-danger btn-sm">
+
+                                            <button type="submit"
+                                                class="btn btn-outline-danger btn-sm{{ $post->id == 1 ? ' disabled' : '' }}"
+                                                {{ $post->id == 1 ? 'disabled' : '' }}>
                                                 <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </form>
