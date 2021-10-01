@@ -3,13 +3,13 @@
 @section('title', 'Login')
 
 @section('content')
-    <div class="container">
+    <div class="container mb-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Login</li>
+                        <li class="breadcrumb-item active" aria-current="page">Auth</li>
                     </ol>
                 </nav>
 
@@ -83,6 +83,25 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+
+                {{-- Mobile register link --}}
+                <div class="d-sm-block d-md-none">
+                    <div class="card mt-3">
+                        <div class="card-body text-center pt-2 pb-1">
+                            <a class="btn btn-link" href="{{ route('register') }}">
+                                {{ __('Register') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body text-center">
+                        <h4>Demo Account</h4>
+                        <p class="mb-1">Email: demo@mail.com</p>
+                        <p>Password: password</p>
                     </div>
                 </div>
             </div>

@@ -37,7 +37,7 @@ class HomeController extends Controller
                 ->inRandomOrder()
                 ->paginate(10);
         } else {
-            $posts = Post::withCount('comments')->inRandomOrder()->paginate(10);
+            $posts = Post::with('author')->withCount('comments')->inRandomOrder()->paginate(10);
         }
 
         return view('home', compact('posts'));

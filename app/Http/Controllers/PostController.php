@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('user_id', auth()->id())->orderByDesc('created_at')->get();
+        $posts = Post::with('author')->withCount('comments')->where('user_id', auth()->id())->orderByDesc('created_at')->get();
 
         return view('posts.index', compact('posts'));
     }
@@ -62,7 +62,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        $post->load('comments')->loadCount('up_votes', 'down_votes', 'comments');
+
+        $hasVotes = $post::hasVotes($post->id);
+
+        return view('posts.show', compact('post', 'hasVotes'));
     }
 
     /**
@@ -73,6 +77,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        abort_if($post->id == 1, 403, 'THIS ACTION IS UNAUTHORIZED.');
+
         $this->authorize('view', $post);
 
         return view('posts.edit', compact('post'));
@@ -102,6 +108,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        abort_if($post->id == 1, 403, 'THIS ACTION IS UNAUTHORIZED.');
+
         $this->authorize('delete', $post);
 
         $post->delete();

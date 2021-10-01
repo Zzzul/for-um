@@ -7,6 +7,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ReplyController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\VoteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +40,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/notification/{id}/{slug}', [UserController::class, 'markAsReadNotification'])
         ->name('notification.markAsRead');
+
+    Route::resource('vote', VoteController::class)
+        ->only('store');
+
+    Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
+    Route::put('/change-profile', [SettingController::class, 'ChangeProfile'])->name('setting.ChangeProfile');
+    Route::put('/change-password', [SettingController::class, 'ChangePassword'])->name('setting.ChangePassword');
 });

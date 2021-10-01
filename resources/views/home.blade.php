@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <input type="text" class="form-control" name="search"
                                 value="{{ request()->query('search') }}"
-                                placeholder="Search post with username, title, or description" autofocus>
+                                placeholder="Username, title, or description (case sensitive)">
                         </div>
                     </div>
 
@@ -47,6 +47,15 @@
                             <div class="card-header">
                                 <small>
                                     <span class="font-weight-bold">
+                                        @if ($post->author->avatar)
+                                            <img src="{{ asset('storage/img/avatar/' . $post->author->avatar) }}"
+                                                alt="Avatar" class="img-fluid rounded-circle"
+                                                style="width: 16px; height: 16px; object-fit: cover;">
+                                        @else
+                                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($post->author->email))) . '?s=' . 70 }}"
+                                                alt="Avatar" width="15" class="img-fluid rounded-circle">
+                                        @endif
+
                                         {{ $post->author->name }}
                                         -
                                         {{ $post->created_at->diffForHumans() }}
@@ -67,7 +76,7 @@
                             </div>
 
                             <div class="card-body">
-                                {!! Str::limit($post->content, 400) !!}
+                                {!! $post->content !!}
                             </div>
                         </div>
                     </a>
@@ -80,7 +89,7 @@
                 </div>
             @endforelse
 
-            <div class="col-md-8">
+            <div class="col-md-8 mb-5">
                 <div class="d-flex justify-content-center">
                     {{ $posts->links() }}
                 </div>

@@ -51,6 +51,8 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
+        abort_if($comment->id == 1, 403, 'THIS ACTION IS UNAUTHORIZED.');
+
         $this->authorize('view', $comment);
 
         return view('comments.edit', compact('comment'));
@@ -80,6 +82,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
+        abort_if($comment->id == 1, 403, 'THIS ACTION IS UNAUTHORIZED.');
+
         $this->authorize('delete', $comment);
 
         $comment->delete();

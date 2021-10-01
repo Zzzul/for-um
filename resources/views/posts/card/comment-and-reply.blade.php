@@ -5,6 +5,15 @@
                 <div class="d-flex justify-content-between mb-0">
                     <p class="my-0">
                         <span class="font-weight-bold">
+                            @if ($comment->user->avatar)
+                                <img src="{{ asset('storage/img/avatar/' . $comment->user->avatar) }}" alt="Avatar"
+                                    class="img-fluid rounded-circle"
+                                    style="width: 15px; height: 15px; object-fit: cover;">
+                            @else
+                                <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($comment->user->email))) . '?s=' . 70 }}"
+                                    alt="Avatar" width="15" class="img-fluid rounded-circle">
+                            @endif
+
                             {{ $comment->user->name }}
 
                         </span>
@@ -17,10 +26,9 @@
 
                     @if (auth()->id() === $comment->user_id)
                         <span>
-                            <a href="{{ route('comment.edit', $comment->id) }}" class="float-left mr-1">
-                                <button class="btn btn-outline-info btn-sm">
-                                    <i class="fas fa-edit"></i>
-                                </button>
+                            <a href="{{ route('comment.edit', $comment->id) }}"
+                                class="float-left mr-1 btn btn-outline-info btn-sm{{ $comment->id == 1 ? ' disabled' : '' }}">
+                                <i class="fas fa-edit"></i>
                             </a>
 
                             <form action="{{ route('comment.destroy', $comment->id) }}" method="POST"
@@ -28,7 +36,9 @@
                                 onsubmit="return confirm('Are you sure want to delete this comment?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger  btn-sm">
+                                <button type="submit"
+                                    class="btn btn-outline-danger btn-sm{{ $comment->id == 1 ? ' disabled' : '' }}"
+                                    {{ $comment->id == 1 ? 'disabled' : '' }}>
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>
@@ -56,10 +66,21 @@
                         @foreach ($comment->replies as $reply)
                             <hr class="ml-4 m-0">
 
-                            <div class="d-flex justify-content-between mb-0 p-2"
+                            <div class="d-flex justify-content-between mb-0 py-3 px-0"
                                 id="reply-comment-{{ $reply->id }}">
                                 <div>
-                                    <span class="font-weight-bold ml-4">{{ $reply->user->name }}</span> -
+                                    <span class="font-weight-bold ml-4">
+                                        @if ($reply->user->avatar)
+                                            <img src="{{ asset('storage/img/avatar/' . $reply->user->avatar) }}"
+                                                alt="Avatar" class="img-fluid rounded-circle"
+                                                style="width: 15px; height: 15px; object-fit: cover;">
+                                        @else
+                                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($reply->user->email))) . '?s=' . 70 }}"
+                                                alt="Avatar" width="15" class="img-fluid rounded-circle">
+                                        @endif
+
+                                        {{ $reply->user->name }}
+                                    </span> -
                                     {{ $reply->created_at->diffForHumans() }}
 
                                     <small class="text-secondary">
@@ -98,7 +119,7 @@
             </div>
         @empty
             <p class="font-weight-bold text-secondary mb-0 text-center">
-                This post does not have any comments
+                This post does not have any comments.
             </p>
         @endforelse
     </div>

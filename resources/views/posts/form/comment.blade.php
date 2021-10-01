@@ -1,5 +1,5 @@
 @auth
-    <div class="card mt-4">
+    <div class="card">
         <div class="card-body">
             <form action="{{ route('comment.store') }}" method="POST">
                 @csrf
@@ -8,8 +8,6 @@
                 <input type="hidden" name="post_id" value="{{ $post->id }}">
 
                 <div class="form-group">
-                    <label for="body">Write Comment</label>
-
                     <input id="body" value="{{ old('body') }}" type="hidden" name="body">
                     <trix-editor input="body"></trix-editor>
 
@@ -30,10 +28,10 @@
 @endauth
 
 @guest
-    <div class="card mt-4">
+    <div class="card">
         <div class="card-body">
             <p class="font-weight-bold text-secondary mb-0 text-center">
-                You must be <a href="/login?goto={{ $post->slug }}">logged in</a> to write a comment.
+                You must be <a href="/login?goto={{ $post->slug }}">login</a> to post a comment.
             </p>
         </div>
     </div>
