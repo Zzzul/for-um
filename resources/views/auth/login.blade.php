@@ -9,7 +9,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Login</li>
+                        <li class="breadcrumb-item active" aria-current="page">Auth</li>
                     </ol>
                 </nav>
 
@@ -17,8 +17,11 @@
                     <div class="card-header">{{ __('Login') }}</div>
 
                     <div class="card-body">
+
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
+
+                            <input type="hidden" name="goto" value="{{ request()->query('goto') }}">
 
                             <div class="form-group row">
                                 <label for="email"
@@ -80,6 +83,17 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+
+                {{-- Mobile register link --}}
+                <div class="d-sm-block d-md-none">
+                    <div class="card mt-3">
+                        <div class="card-body text-center pt-2 pb-1">
+                            <a class="btn btn-link" href="{{ route('register') }}">
+                                {{ __('Register') }}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,12 +3,11 @@
 @section('title', $post->title)
 
 @section('content')
-    <div class="container">
+    <div class="container mb-5">
         <div class="row justify-content-center">
-
-            <div class="col-md-8 mb-4">
+            <div class="col-md-8 mb-3">
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-4">
+                    <ol class="breadcrumb mb-3">
                         <li class="breadcrumb-item">
                             <a href="{{ route('home') }}">Home</a>
                         </li>
@@ -22,205 +21,131 @@
                 </nav>
 
                 @include('partials.alert')
+            </div>
+        </div>
 
-                {{-- card title and content of posts --}}
-                <div class="card shadow-sm">
-                    <div class="card-header">
-                        <small>
-                            <span class="font-weight-bold">
-                                {{ $post->author->name }}
-                                -
-                                {{ $post->created_at->diffForHumans() }}
-                            </span>
+        {{-- Desktop votes --}}
+        <div class="d-none d-md-block">
+            <div class="row justify-content-center mt-0">
+                <div class="col-md-1">
+                    <div class="card">
+                        <div class="card-body pl-3 text-center">
+                            <form action="{{ route('vote.store') }}" class="d-flex form-inline" method="POST">
+                                @csrf
+                                @method('post')
 
-                            <span class="text-secondary">
-                                {{ $post->created_at != $post->updated_at ? '(edited)' : '' }}
-                            </span>
-                        </small>
+                                <div class="{{ $hasVotes == 'up' ? 'text-primary' : 'text-secondary' }}">
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
 
-                        <small class="float-right text-secondary">
-                            {{ $post->comments_count . ' ' . Str::plural('Comment', $post->comments_count + 1) }}
+                                    <input type="hidden" name="type" value="1">
 
-                            @if (auth()->id() === $post->user_id)
-                                <br>
-                                <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-outline-info btn-sm">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                            @endif
-                        </small>
-
-                        <br>
-
-                        {{ $post->title }}
-                    </div>
-
-                    <div class="card-body">
-                        {{ $post->content }}
-                    </div>
-                </div>
-
-                {{-- form write comments --}}
-                <div class="card mt-4">
-                    <div class="card-body">
-                        <form action="{{ route('comment.store') }}" method="POST">
-                            @csrf
-                            @method('POST')
-
-                            <input type="hidden" name="post_id" value="{{ $post->id }}">
-
-                            <div class="row form-group">
-                                <div class="col-md-10">
-                                    <label for="body">Write Comment</label>
-                                    <textarea class="form-control @error('body') is-invalid @enderror" name="body" id="body"
-                                        placeholder="{{ auth()->check() ? 'Nice posts!' : 'You must be login.' }}"
-                                        autofocus @guest disabled @endguest>{{ old('body') }}</textarea>
-                                    @error('body')
-                                        <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-2 mt-4 mb-2 pt-1">
-                                    <button type="submit" class="btn btn-outline-primary btn-block h-100" @guest disabled
-                                        @endguest>
-                                        <i class="fas fa-paper-plane"></i>
-                                        Send
+                                    <button
+                                        class="btn btn-transparent p-1{{ $hasVotes == 'up' ? ' text-primary' : ' text-secondary' }}"
+                                        type="submit">
+                                        <h5>{{ $post->up_votes_count }}</h5>
+                                        <i class="fas fa-sort-up fa-3x"></i>
                                     </button>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+
+
+                            <form action="{{ route('vote.store') }}" class="d-flex form-inline" method="POST">
+                                @csrf
+                                @method('post')
+
+                                <div class="{{ $hasVotes == 'down' ? 'text-primary' : 'text-secondary' }}">
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+
+                                    <input type="hidden" name="type" value="0">
+
+                                    <button
+                                        class="btn btn-transparent p-1{{ $hasVotes == 'down' ? ' text-primary' : ' text-secondary' }}"
+                                        type="submit">
+                                        <i class="fas fa-sort-down fa-3x"></i>
+
+                                        <h5>{{ $post->down_votes_count }}</h5>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
+
+                <div class="col-md-7">
+                    @include('posts.card.post-content', ['post' => $post])
+                </div>
+            </div>
+        </div>
+
+        {{-- Mobile votes --}}
+        <div class="d-sm-block d-md-none">
+            <div class="row justify-content-center mt-0">
+                <div class="col-md-12">
+                    @include('posts.card.post-content', ['post' => $post])
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <h4 class="mt-1">Votes</h4>
+                    <div class="card">
+                        <div class="card-body py-1 px-5 d-flex justify-content-between">
+                            <div class="ml-5">
+                                <form action="{{ route('vote.store') }}" method="POST">
+                                    @csrf
+                                    @method('post')
+
+                                    <div class="{{ $hasVotes == 'up' ? 'text-primary' : 'text-secondary' }}">
+                                        <input type="hidden" name="post_id" value="{{ $post->id }}">
+
+                                        <input type="hidden" name="type" value="1">
+
+                                        <button
+                                            class="btn btn-transparent p-1{{ $hasVotes == 'up' ? ' text-primary' : ' text-secondary' }}"
+                                            type="submit">
+                                            <h5 class="float-left mr-2 mt-3">{{ $post->up_votes_count }}</h5>
+
+                                            <i class="fas fa-sort-up fa-3x float-right mt-3"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="mr-5">
+                                <form action="{{ route('vote.store') }}" method="POST">
+                                    @csrf
+                                    @method('post')
+
+                                    <div class="{{ $hasVotes == 'down' ? 'text-primary' : 'text-secondary' }}">
+                                        <input type="hidden" name="post_id" value="{{ $post->id }}">
+
+                                        <input type="hidden" name="type" value="0">
+
+                                        <button
+                                            class="btn btn-transparent p-1{{ $hasVotes == 'down' ? ' text-primary' : ' text-secondary' }}"
+                                            type="submit">
+
+                                            <i class="fas fa-sort-down fa-3x float-left mr-2 mb-3"></i>
+
+                                            <h5 class="float-right mt-3">{{ $post->down_votes_count }}</h5>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8">
+                <h4 class="mt-4">
+                    Post a Comment
+                </h4>
+                @include('posts.form.comment', ['post' => $post])
 
                 <h4 class="mt-4 mb-2">All Comments</h4>
-                <div class="card">
-                    <div class="card-body">
-                        @forelse ($post->comments as $comment)
-                            <div class="my-2 p-2" id="comment-{{ $comment->id }}">
-                                <div class="d-flex justify-content-between mb-0">
-                                    <p class="mb-0">
-                                        <span class="font-weight-bold">
-                                            {{ $comment->user->name }}
 
-                                        </span>
-                                        - {{ $comment->created_at->diffForHumans() }}
-
-                                        <small class="text-secondary">
-                                            {{ $comment->created_at != $comment->updated_at ? '(edited)' : '' }}
-                                        </small>
-                                    </p>
-
-                                    @if (auth()->id() === $comment->user_id)
-                                        <span>
-                                            <a href="{{ route('comment.edit', $comment->id) }}" class="float-left mr-1">
-                                                <button class="btn btn-outline-info btn-sm">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                            </a>
-
-                                            <form action="{{ route('comment.destroy', $comment->id) }}" method="POST"
-                                                class="float-right"
-                                                onsubmit="return confirm('Are you sure want to delete this comment?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-outline-danger  btn-sm">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-                                        </span>
-                                    @endif
-                                </div>
-
-                                <p> {{ $comment->body }}</p>
-
-                                <div class="d-flex justify-content-between">
-                                    <a data-toggle="collapse" href="#collapseReply-{{ $comment->id }}"
-                                        aria-expanded="false" role="button"
-                                        aria-controls="collapseReply-{{ $comment->id }}">
-                                        <i class="fas fa-reply"></i> Reply
-                                    </a>
-
-                                    <p class="mb-0 text-secondary">
-                                        {{ $comment->replies_count > 0 ? $comment->replies_count . ' ' . Str::plural('Reply', $comment->replies_count) : '' }}
-                                    </p>
-                                </div>
-
-                                <div class="mt-2 collapse" id="collapseReply-{{ $comment->id }}">
-                                    <form action="{{ route('reply.store') }}" method="POST">
-                                        @csrf
-                                        @method('POST')
-
-                                        <input type="hidden" name="comment_id" value="{{ $comment->id }}">
-
-                                        <div class="form-group mb-2">
-                                            <textarea class="form-control @error('reply') is-invalid @enderror" name="reply"
-                                                placeholder="{{ auth()->check() ? 'Nice comment bro!' : 'You must be login.' }}"
-                                                autofocus @guest disabled @endguest>{{ old('reply') }}</textarea>
-                                            @error('reply')
-                                                <span class="invalid-feedback" role="alert">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-outline-primary" @guest disabled @endguest>
-                                                <i class="fas fa-paper-plane"></i>
-                                                Send
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                    <div class="ml-5">
-                                        @foreach ($comment->replies as $reply)
-                                            <hr class="ml-4 mt-0">
-
-                                            <div class="d-flex justify-content-between mb-0 p-2"
-                                                id="reply-{{ $reply->id }}">
-                                                <div>
-                                                    <span class="font-weight-bold ml-4">{{ $reply->user->name }}</span> -
-                                                    {{ $reply->created_at->diffForHumans() }}
-
-                                                    <small class="text-secondary">
-                                                        {{ $reply->created_at != $reply->updated_at ? '(edited)' : '' }}
-                                                    </small>
-
-                                                    <p class="ml-4">{{ $reply->body }}</p>
-                                                </div>
-
-
-                                                @if (auth()->id() === $reply->user_id)
-                                                    <div>
-                                                        <span>
-                                                            <a href="{{ route('reply.edit', $reply->id) }}"
-                                                                class="float-left mr-1">
-                                                                <button class="btn btn-outline-info btn-sm">
-                                                                    <i class="fas fa-edit"></i>
-                                                                </button>
-                                                            </a>
-
-                                                            <form action="{{ route('reply.destroy', $reply->id) }}"
-                                                                method="POST" class="float-right"
-                                                                onsubmit="return confirm('Are you sure want to delete this reply?')">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-outline-danger btn-sm">
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                </button>
-                                                            </form>
-                                                        </span>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                                <hr>
-                            </div>
-                        @empty
-                            <p class="font-weight-bold text-secondary mb-0 text-center">
-                                This post dont have any comment.
-                            </p>
-                        @endforelse
-                    </div>
-                </div>
+                @include('posts.card.comment-and-reply', ['post' => $post])
             </div>
         </div>
     </div>
@@ -230,10 +155,9 @@
     <script>
         const commentId = getQueryParams('comment')
         const replyId = getQueryParams('reply') ? getQueryParams('reply') : null
-
         const commentElement = document.getElementById('comment-' + commentId)
         const collapseReply = document.getElementById('collapseReply-' + commentId)
-        const replyElement = document.getElementById('reply-' + replyId)
+        const replyElement = document.getElementById('reply-comment-' + replyId)
 
         if (replyId === null) {
             headlineElement(commentElement)
@@ -250,7 +174,6 @@
             element.style.backgroundColor = '#f7f7f7'
             element.style.border = '1px solid #158cba'
             element.style.borderRadius = '5px'
-
             element.addEventListener('mouseover', function() {
                 setInterval(() => {
                     this.style.backgroundColor = 'white'
@@ -261,3 +184,5 @@
         }
     </script>
 @endsection
+
+@include('partials.trix-editor')

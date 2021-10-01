@@ -19,41 +19,29 @@
                         @if ($notification->type == 'App\Notifications\PostCommentNotification')
                             {{-- comment notification --}}
                             <li class="list-group-item{{ $notification->read_at ? ' bg-secondary' : '' }}">
-                                <p class="mb-0">
-                                    Your post
-                                    <span class="font-weight-bold">
-                                        {{ Str::limit($notification->data['post']['title'], 75) }}</span>
-                                    received a new comments - {{ $notification->created_at->diffForHumans() }}
-                                </p>
-
-                                {{-- <a href="/post/{{ $notification->data['post']['slug'] . '#' . $notification->data['comment']['id'] }}" --}}
-
                                 <a href="{{ route('notification.markAsRead', ['id' => $notification->id, 'slug' => $notification->data['post']['slug']]) }}"
                                     class="{{ $notification->read_at ? 'text-dark' : '' }}">
-                                    <span class="font-weight-bold">
-                                        {{ $notification->data['comment']['user']['name'] }}
-                                    </span>
-                                    -
-                                    {{ Str::limit($notification->data['comment']['body'], 300) }}
+                                    <p class="mb-0">
+                                        <span class="font-weight-bold">
+                                            {{ $notification->data['comment']['user']['name'] }}
+                                        </span>
+                                        commented your post
+                                        {{ $notification->created_at->diffForHumans() }}
+                                    </p>
                                 </a>
                             </li>
                         @else
                             {{-- reply notification --}}
                             <li class="list-group-item{{ $notification->read_at ? ' bg-secondary' : '' }}">
-                                <p class="mb-0">
-                                    Your comment
-                                    <span class="font-weight-bold">
-                                        {{ Str::limit($notification->data['comment']['body'], 75) }}</span>
-                                    received a new reply - {{ $notification->created_at->diffForHumans() }}
-                                </p>
-
                                 <a href="{{ route('notification.markAsRead', ['id' => $notification->id, 'slug' => $notification->data['comment']['post']['slug']]) }}"
                                     class="{{ $notification->read_at ? 'text-dark' : '' }}">
-                                    <span class="font-weight-bold">
-                                        {{ $notification->data['reply']['user']['name'] }}
-                                    </span>
-                                    -
-                                    {{ Str::limit($notification->data['reply']['body'], 300) }}
+                                    <p class="mb-0">
+                                        <span class="font-weight-bold">
+                                            {{ $notification->data['reply']['user']['name'] }}
+                                        </span>
+                                        replied your comment
+                                        {{ $notification->created_at->diffForHumans() }}
+                                    </p>
                                 </a>
                             </li>
                         @endif

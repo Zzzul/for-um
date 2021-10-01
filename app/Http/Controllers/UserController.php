@@ -34,7 +34,7 @@ class UserController extends Controller
 
         $post = Post::where('slug', $slug)->firstOrfail();
 
-        // dd($notification->data);
+        // dd($notification->data);;
 
         if ($notification->type == 'App\Notifications\PostCommentNotification') {
             return redirect()->route(
@@ -48,6 +48,5 @@ class UserController extends Controller
                     . '&reply=' . $notification->data['reply']['id']
             );
         }
-        // return redirect()->route('post.show', $post->slug . '#' . $notification->data['comment']['id']);
     }
 }

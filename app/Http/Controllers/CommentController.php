@@ -33,15 +33,9 @@ class CommentController extends Controller
     {
         $post = Post::findOrFail($request->post_id);
 
-        $attr = $request->validated();
-        $attr['user_id'] = auth()->id();
-        $attr['post_id'] = $post->id;
+        $comment = auth()->user()->comments()->create($request->validated());
 
-        $comment = Comment::create($attr);
-
-        /**
-         * only send notification when user commented another user comments.
-         */
+        /** only send notification when user commented another user comments.*/
         if ($comment->post->author->id != auth()->id()) {
             $comment->post->author->notify(new PostCommentNotification($post, $comment));
         }
@@ -57,12 +51,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        /**
-         * if user want to edit another user comment
-         */
-        if (auth()->id() !== $comment->user_id) {
-            return abort(404);
-        }
+        $this->authorize('view', $comment);
 
         return view('comments.edit', compact('comment'));
     }
@@ -76,6 +65,8 @@ class CommentController extends Controller
      */
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
+        $this->authorize('update', $comment);
+
         $comment->update($request->validated());
 
         return redirect()->route('post.show', $comment->post->slug)->with('success', 'Comment updated.');
@@ -89,12 +80,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        /**
-         * if user want to edit delete user comment
-         */
-        if (auth()->id() !== $comment->user_id) {
-            return abort(404);
-        }
+        $this->authorize('delete', $comment);
 
         $comment->delete();
 

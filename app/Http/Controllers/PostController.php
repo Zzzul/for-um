@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::where('user_id', auth()->id())->orderByDesc('created_at')->get();
+        $posts = Post::with('author')->withCount('comments')->where('user_id', auth()->id())->orderByDesc('created_at')->get();
 
         return view('posts.index', compact('posts'));
     }
@@ -47,10 +47,9 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $attr = $request->validated();
-        $attr['user_id'] = auth()->id();
         $attr['slug'] = Str::slug($request->title . ' ' . Str::random(5));
 
-        Post::create($attr);
+        auth()->user()->posts()->create($attr);
 
         return redirect()->route('post.index')->with('success', 'Post published.');
     }
@@ -63,7 +62,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        $post->load('comments')->loadCount('up_votes', 'down_votes', 'comments');
+
+        $hasVotes = $post::hasVotes($post->id);
+
+        return view('posts.show', compact('post', 'hasVotes'));
     }
 
     /**
@@ -74,12 +77,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        /**
-         * if user want to edit another user post
-         */
-        if (auth()->id() !== $post->user_id) {
-            return abort(404);
-        }
+        $this->authorize('view', $post);
 
         return view('posts.edit', compact('post'));
     }
@@ -93,6 +91,8 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $post->update($request->validated());
 
         return redirect()->route('post.show', $post->slug)->with('success', 'Post updated.');
@@ -106,12 +106,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        /**
-         * if user want to delete another user post
-         */
-        if (auth()->id() !== $post->user_id) {
-            return abort(404);
-        }
+        $this->authorize('delete', $post);
 
         $post->delete();
 

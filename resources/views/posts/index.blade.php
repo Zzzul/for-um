@@ -31,7 +31,6 @@
                         <thead>
                             <th>#</th>
                             <th>Title</th>
-                            <th>Content</th>
                             <th>Comments</th>
                             <th>Created At</th>
                             <th>Updated At</th>
@@ -45,7 +44,6 @@
                                     <td>
                                         <a href="{{ route('post.show', $post->slug) }}">{{ $post->title }}</a>
                                     </td>
-                                    <td>{{ Str::limit($post->content, 100) }}</td>
                                     <td>{{ $post->comments_count . ' ' . Str::plural('Comment', $post->comments_count) }}
                                     </td>
                                     <td>{{ $post->created_at->diffForHumans() }}</td>

@@ -6,7 +6,6 @@ use App\Http\Requests\StoreReplyRequest;
 use App\Http\Requests\UpdateReplyRequest;
 use App\Models\Reply;
 use App\Models\Comment;
-use Illuminate\Http\Request;
 use App\Notifications\ReplyCommentNotification;
 
 class ReplyController extends Controller
@@ -31,16 +30,17 @@ class ReplyController extends Controller
      */
     public function store(StoreReplyRequest $request)
     {
-        $comment = Comment::with('post')->findOrFail($request->comment_id);
+        $comment = Comment::withOnly('post')->findOrFail($request->comment_id);
 
         $attr = $request->validated();
-        $attr['user_id'] = auth()->id();
-        $attr['comment_id'] = $comment->id;
-        $attr['body'] = $request->reply;
 
-        $reply = Reply::create($attr);
+        $reply = 'reply-' . $request->comment_id;
+        $attr['body'] = $request->$reply;
+
+        $reply = auth()->user()->replies()->create($attr);
 
         if ($comment->user->id !== auth()->id()) {
+            // Notify the user if reply another user comment
             $comment->user->notify(new ReplyCommentNotification($reply, $comment));
         }
 
@@ -55,12 +55,7 @@ class ReplyController extends Controller
      */
     public function edit(Reply $reply)
     {
-        /**
-         * if user want to edit edit user reply
-         */
-        if (auth()->id() !== $reply->user_id) {
-            return abort(404);
-        }
+        $this->authorize('view', $reply);
 
         return view('replies.edit', compact('reply'));
     }
@@ -74,6 +69,8 @@ class ReplyController extends Controller
      */
     public function update(UpdateReplyRequest $request, Reply $reply)
     {
+        $this->authorize('update', $reply);
+
         $attr = $request->validated();
         $attr['body'] = $request->reply;
 
@@ -90,12 +87,7 @@ class ReplyController extends Controller
      */
     public function destroy(Reply $reply)
     {
-        /**
-         * if user want to edit delete user reply
-         */
-        if (auth()->id() !== $reply->user_id) {
-            return abort(404);
-        }
+        $this->authorize('delete', $reply);
 
         $reply->delete();
 
