@@ -61,7 +61,7 @@
                                         class="img-fluid rounded-circle mr-1"
                                         style="width: 20px; height: 20px; object-fit: cover;">
                                 @else
-                                    <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=' . 20 }}"
+                                    <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=' . 70 }}"
                                         alt="Avatar" width="20" class="img-fluid rounded-circle mr-1">
                                 @endif
 

@@ -10,7 +10,7 @@
                                     class="img-fluid rounded-circle"
                                     style="width: 15px; height: 15px; object-fit: cover;">
                             @else
-                                <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($comment->user->email))) . '?s=' . 15 }}"
+                                <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($comment->user->email))) . '?s=' . 70 }}"
                                     alt="Avatar" width="15" class="img-fluid rounded-circle">
                             @endif
 
@@ -74,7 +74,7 @@
                                                 alt="Avatar" class="img-fluid rounded-circle"
                                                 style="width: 15px; height: 15px; object-fit: cover;">
                                         @else
-                                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($reply->user->email))) . '?s=' . 15 }}"
+                                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($reply->user->email))) . '?s=' . 70 }}"
                                                 alt="Avatar" width="15" class="img-fluid rounded-circle">
                                         @endif
 
