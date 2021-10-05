@@ -48,10 +48,16 @@
 
                         <span class="mt-1 mb-0 small d-block">Profile</span>
                     </a>
+
                     <!-- Dropup menu for profile -->
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuProfile">
                         <a class="dropdown-item{{ request()->routeIs('notification') ? ' active' : '' }}"
-                            href="{{ route('notification') }}">Notification</a>
+                            href="{{ route('notification') }}">
+                            Notification
+                            <span class="badge badge-secondary ml-1">
+                                {{ auth()->user()->unreadNotifications->count() }}
+                            </span>
+                        </a>
 
 
                         <a class="dropdown-item{{ request()->routeIs('setting.*') ? ' active' : '' }}"
