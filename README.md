@@ -19,12 +19,6 @@ Install all dependencies
 ```shell
 # install laravel dependency
 $ composer install
-
-# install npm packages
-$ npm install
-
-# build dev 
-$ npm run dev
 ```
 
 Generate app key, configure `.env` file and do migration.
@@ -39,8 +33,11 @@ $ MAIL_PORT=2525
 $ MAIL_USERNAME=YOUR_USERNAME
 $ MAIL_PASSWORD=YOUR_PASSWORD
 $ MAIL_ENCRYPTION=tls
-$ MAIL_FROM_ADDRESS="noreply@gmail.com"
+$ MAIL_FROM_ADDRESS="noreply@example.com"
 $ MAIL_FROM_NAME="${APP_NAME}"
+
+# set queue connection
+$ QUEUE_CONNECTION=database
 
 # create laravel key
 $ php artisan key:generate
@@ -48,11 +45,11 @@ $ php artisan key:generate
 # laravel migrate
 $ php artisan migrate
 
-# run queue
-$ php artisan queue:work
-
 # Start local development server
 $ php artisan serve
+
+# run queue on other terminal
+$ php artisan queue:work
 ```
 
 ## License
