@@ -18,7 +18,8 @@
                     <div class="col-md-10 m-0">
                         <div class="form-group">
                             <input type="text" class="form-control" name="search"
-                                value="{{ request()->query('search') }}" placeholder="Username, title, or description">
+                                value="{{ request()->query('search') }}"
+                                placeholder="Username, title, or description (case sensitive)">
                         </div>
                     </div>
 
@@ -51,7 +52,7 @@
                                                 alt="Avatar" class="img-fluid rounded-circle"
                                                 style="width: 16px; height: 16px; object-fit: cover;">
                                         @else
-                                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($post->author->email))) . '?s=' . 15 }}"
+                                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($post->author->email))) . '?s=' . 70 }}"
                                                 alt="Avatar" width="15" class="img-fluid rounded-circle">
                                         @endif
 
@@ -75,7 +76,7 @@
                             </div>
 
                             <div class="card-body">
-                                {!! Str::limit($post->content, 400) !!}
+                                {!! $post->content !!}
                             </div>
                         </div>
                     </a>

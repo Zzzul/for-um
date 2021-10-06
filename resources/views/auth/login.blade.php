@@ -3,7 +3,7 @@
 @section('title', 'Login')
 
 @section('content')
-    <div class="container">
+    <div class="container mb-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <nav aria-label="breadcrumb">
@@ -94,6 +94,14 @@
                                 {{ __('Register') }}
                             </a>
                         </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-body text-center">
+                        <h4>Demo Account</h4>
+                        <p class="mb-1">Email: demo@mail.com</p>
+                        <p>Password: password</p>
                     </div>
                 </div>
             </div>

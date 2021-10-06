@@ -25,7 +25,10 @@ class ReplySeeder extends Seeder
             'user_id' => $user->id,
             'title' => 'This is post from reply seeder',
             'slug' => Str::slug('This is post from reply seeder' . ' ' . Str::random(5)),
-            'content' => 'Proin consectetur ornare nibh, at porta tellus volutpat quis. Maecenas luctus, urna vel cursus lobortis, quam tortor sollicitudin sem, ut congue nisl lorem at tortor. Donec urna mauris,suscipit mattis eu metus. Curabitur molestie eu justo egestas vulputate. Nunc finibus eleifend luctus. Sed faucibus nunc nibh, non euismod erat ullamcorper ut.'
+            'content' => 'Proin consectetur ornare nibh, at porta tellus volutpat quis.
+             Maecenas luctus, urna vel cursus lobortis, quam tortor sollicitudin sem, ut congue nisl lorem at tortor. Donec urna mauris,suscipit mattis eu metus. Curabitur molestie eu justo egestas vulputate.
+            <br><br>
+            <b>Nunc finibus eleifend luctus. Sed faucibus nunc nibh, non euismod erat ullamcorper ut.</b>'
         ]);
 
         $comment = Comment::create([

@@ -6,7 +6,7 @@
                     <img src="{{ asset('storage/img/avatar/' . $post->author->avatar) }}" alt="Avatar"
                         class="img-fluid rounded-circle" style="width: 15px; height: 15px; object-fit: cover;">
                 @else
-                    <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($post->author->email))) . '?s=' . 15 }}"
+                    <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($post->author->email))) . '?s=' . 70 }}"
                         alt="Avatar" width="15" class="img-fluid rounded-circle">
                 @endif
 
@@ -25,7 +25,8 @@
 
             @if (auth()->id() === $post->user_id)
                 <br>
-                <a href="{{ route('post.edit', $post->slug) }}" class="btn btn-outline-info btn-sm">
+                <a href="{{ route('post.edit', $post->slug) }}"
+                    class="btn btn-outline-info btn-sm{{ $post->id === 1 ? ' disabled' : '' }}">
                     <i class="fas fa-edit"></i>
                 </a>
             @endif

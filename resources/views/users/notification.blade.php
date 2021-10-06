@@ -23,6 +23,15 @@
                                     class="{{ $notification->read_at ? 'text-dark' : '' }}">
                                     <p class="mb-0">
                                         <span class="font-weight-bold">
+                                            @if ($notification->data['comment']['user']['avatar'])
+                                                <img src="{{ asset('storage/img/avatar/' . $notification->data['comment']['user']['avatar']) }}"
+                                                    alt="Avatar" class="img-fluid rounded-circle"
+                                                    style="width: 16px; height: 16px; object-fit: cover;">
+                                            @else
+                                                <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($notification->data['comment']['user']['email']))) . '?s=' . 70 }}"
+                                                    alt="Avatar" width="15" class="img-fluid rounded-circle">
+                                            @endif
+
                                             {{ $notification->data['comment']['user']['name'] }}
                                         </span>
                                         commented your post
@@ -37,6 +46,15 @@
                                     class="{{ $notification->read_at ? 'text-dark' : '' }}">
                                     <p class="mb-0">
                                         <span class="font-weight-bold">
+                                            @if ($notification->data['reply']['user']['avatar'])
+                                                <img src="{{ asset('storage/img/avatar/' . $notification->data['reply']['user']['avatar']) }}"
+                                                    alt="Avatar" class="img-fluid rounded-circle"
+                                                    style="width: 16px; height: 16px; object-fit: cover;">
+                                            @else
+                                                <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim($notification->data['reply']['user']['email']))) . '?s=' . 70 }}"
+                                                    alt="Avatar" width="15" class="img-fluid rounded-circle">
+                                            @endif
+
                                             {{ $notification->data['reply']['user']['name'] }}
                                         </span>
                                         replied your comment
