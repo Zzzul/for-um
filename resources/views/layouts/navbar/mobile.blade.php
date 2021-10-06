@@ -42,7 +42,7 @@
                             <img src="{{ asset('storage/img/avatar/' . auth()->user()->avatar) }}" alt="Avatar"
                                 class="img-fluid rounded-circle" style="width: 20px; height: 20px; object-fit: cover;">
                         @else
-                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=' . 20 }}"
+                            <img src="{{ 'https://www.gravatar.com/avatar/' . md5(strtolower(trim(auth()->user()->email))) . '?s=' . 50 }}"
                                 alt="Avatar" width="27" class="img-fluid rounded-circle">
                         @endif
 
@@ -51,7 +51,13 @@
                     <!-- Dropup menu for profile -->
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuProfile">
                         <a class="dropdown-item{{ request()->routeIs('notification') ? ' active' : '' }}"
-                            href="{{ route('notification') }}">Notification</a>
+                            href="{{ route('notification') }}">
+                            Notification
+
+                            <span class="badge badge-secondary ml-1">
+                                {{ auth()->user()->unreadNotifications->count() }}
+                            </span>
+                        </a>
 
 
                         <a class="dropdown-item{{ request()->routeIs('setting.*') ? ' active' : '' }}"

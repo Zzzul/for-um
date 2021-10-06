@@ -153,27 +153,26 @@
 
 @section('script')
     <script>
-        const commentId = getQueryParams('comment')
-        const replyId = getQueryParams('reply') ? getQueryParams('reply') : null
-        const commentElement = document.getElementById('comment-' + commentId)
-        const collapseReply = document.getElementById('collapseReply-' + commentId)
-        const replyElement = document.getElementById('reply-comment-' + replyId)
-
-        if (replyId === null) {
-            headlineElement(commentElement)
-        } else {
-            collapseReply.classList.add('show')
-            headlineElement(replyElement)
+        function getHashValue(key) {
+            var matches = location.hash.match(new RegExp(key + '=([^&]*)'))
+            return matches ? matches[1] : null;
         }
 
-        function getQueryParams(name) {
-            return (location.search.split(name + '=')[1] || '').split('&')[0];
+        const commentId = getHashValue('comment')
+        const replyId = getHashValue('reply')
+
+        if (replyId !== null) {
+            document.getElementById('collapseReply-' + commentId).classList.add('show')
         }
+
+        const element = document.getElementById(window.location.hash.substr(1))
+        headlineElement(element)
 
         function headlineElement(element) {
             element.style.backgroundColor = '#f7f7f7'
-            element.style.border = '1px solid #158cba'
+            element.style.border = '2px solid #158cba'
             element.style.borderRadius = '5px'
+
             element.addEventListener('mouseover', function() {
                 setInterval(() => {
                     this.style.backgroundColor = 'white'

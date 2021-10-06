@@ -46,7 +46,7 @@ class ReplyCommentNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject('Your comment recevied a new reply')
             ->line($this->reply->user->name . ' replied your comment')
-            ->action('View post', route('post.show', $this->comment->post->slug . '?comment=' . $this->comment->id . '&reply=' . $this->reply->id))
+            ->action('View post', route('post.show', $this->comment->post->slug . '#comment=' . $this->comment->id . '&reply=' . $this->reply->id))
             ->line('Thank you for using our application!');
     }
 
