@@ -3,20 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-
     /**
      * Show the application dashboard.
      *
@@ -28,7 +17,8 @@ class HomeController extends Controller
         $search = request()->query('search');
 
         if ($search) {
-            $posts = Post::withCount('comments')
+            $posts = Post::with('author:id,name,avatar')
+                ->withCount('comments')
                 ->whereHas('author', function ($query) use ($search) {
                     $query->where('name', 'like', '%' . $search . '%');
                 })
@@ -37,14 +27,12 @@ class HomeController extends Controller
                 ->inRandomOrder()
                 ->paginate(10);
         } else {
-            $posts = Post::with('author')->withCount('comments')->inRandomOrder()->paginate(10);
+            $posts = Post::with('author:id,name,avatar')
+                ->withCount('comments')
+                ->inRandomOrder()
+                ->paginate(10);
         }
 
         return view('home', compact('posts'));
-    }
-
-    public function search(Request $request)
-    {
-        dd($request->query('search'));
     }
 }

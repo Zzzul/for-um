@@ -11,8 +11,6 @@ class Votes extends Model
 
     protected $fillable = ['user_id', 'post_id', 'type'];
 
-    protected $with = ['post', 'user'];
-
     public function post()
     {
         return $this->belongsTo(Post::class);

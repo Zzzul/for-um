@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVoteRequest;
-use App\Models\Post;
-use App\Models\Votes;
-use Illuminate\Http\Request;
 
 class VoteController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      *

@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Cache;
 
 class PostController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth')->except('show');
@@ -48,8 +47,9 @@ class PostController extends Controller
     {
         $attr = $request->validated();
         $attr['slug'] = Str::slug($request->title . ' ' . Str::random(5));
+        $attr['user_id'] = auth()->id();
 
-        auth()->user()->posts()->create($attr);
+        Post::create($attr);
 
         return redirect()->route('post.index')->with('success', 'Post published.');
     }
@@ -60,11 +60,19 @@ class PostController extends Controller
      * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(string $slug)
     {
-        $post->load('comments')->loadCount('up_votes', 'down_votes', 'comments');
+        $hasVotes = null;
 
-        $hasVotes = $post::hasVotes($post->id);
+        $post = Cache::remember($slug, now()->addDay(), function () use ($slug) {
+            return Post::where('slug', $slug)
+                ->with('comments', 'comments.user:id,name', 'comments.replies', 'comments.replies.user:id,name')->withCount('up_votes', 'down_votes', 'comments')
+                ->firstOrFail();
+        });
+
+        if (auth()->user()) {
+            $hasVotes = $post::hasVotes($post->id);
+        }
 
         return view('posts.show', compact('post', 'hasVotes'));
     }

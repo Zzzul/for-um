@@ -11,19 +11,6 @@ use App\Notifications\PostCommentNotification;
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $comments = Comment::where('user_id', auth()->id())->paginate(10);
-
-        return view('comments.index', compact('comments'));
-    }
-
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

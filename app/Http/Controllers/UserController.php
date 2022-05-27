@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -33,8 +32,6 @@ class UserController extends Controller
         }
 
         $post = Post::where('slug', $slug)->firstOrfail();
-
-        // dd($notification->data);;
 
         if ($notification->type == 'App\Notifications\PostCommentNotification') {
             return redirect()->route(

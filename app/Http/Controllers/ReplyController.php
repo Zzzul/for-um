@@ -11,18 +11,6 @@ use App\Notifications\ReplyCommentNotification;
 class ReplyController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $replies = Reply::with('comment')->where('user_id', auth()->id())->paginate(10);
-
-        return view('replies.index', compact('replies'));
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

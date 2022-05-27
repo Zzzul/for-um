@@ -11,10 +11,6 @@ class Post extends Model
 
     protected $fillable = ['user_id', 'title', 'slug', 'content'];
 
-    // protected $with = ['author', 'comments'];
-
-    // protected $withCount = ['comments'];
-
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -42,7 +38,7 @@ class Post extends Model
 
     static function hasVotes($id)
     {
-        $votes = Votes::where('user_id', auth()->id())->where('post_id', $id)->first();
+        $votes = Votes::where(['user_id' => auth()->id(), 'post_id' => $id])->first();
 
         if ($votes) {
             if ($votes->type == 0) {
