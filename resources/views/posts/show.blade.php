@@ -34,13 +34,13 @@
                                 @csrf
                                 @method('post')
 
-                                <div class="{{ $hasVotes == 'up' ? 'text-primary' : 'text-secondary' }}">
+                                <div class="{{ $hasVote == 'up' ? 'text-primary' : 'text-secondary' }}">
                                     <input type="hidden" name="post_id" value="{{ $post->id }}">
 
                                     <input type="hidden" name="type" value="1">
 
                                     <button
-                                        class="btn btn-transparent p-1{{ $hasVotes == 'up' ? ' text-primary' : ' text-secondary' }}"
+                                        class="btn btn-transparent p-1{{ $hasVote == 'up' ? ' text-primary' : ' text-secondary' }}"
                                         type="submit">
                                         <h5>{{ $post->up_votes_count }}</h5>
                                         <i class="fas fa-sort-up fa-3x"></i>
@@ -48,18 +48,17 @@
                                 </div>
                             </form>
 
-
                             <form action="{{ route('vote.store') }}" class="d-flex form-inline" method="POST">
                                 @csrf
                                 @method('post')
 
-                                <div class="{{ $hasVotes == 'down' ? 'text-primary' : 'text-secondary' }}">
+                                <div class="{{ $hasVote == 'down' ? 'text-primary' : 'text-secondary' }}">
                                     <input type="hidden" name="post_id" value="{{ $post->id }}">
 
                                     <input type="hidden" name="type" value="0">
 
                                     <button
-                                        class="btn btn-transparent p-1{{ $hasVotes == 'down' ? ' text-primary' : ' text-secondary' }}"
+                                        class="btn btn-transparent p-1{{ $hasVote == 'down' ? ' text-primary' : ' text-secondary' }}"
                                         type="submit">
                                         <i class="fas fa-sort-down fa-3x"></i>
 
@@ -93,13 +92,13 @@
                                     @csrf
                                     @method('post')
 
-                                    <div class="{{ $hasVotes == 'up' ? 'text-primary' : 'text-secondary' }}">
+                                    <div class="{{ $hasVote == 'up' ? 'text-primary' : 'text-secondary' }}">
                                         <input type="hidden" name="post_id" value="{{ $post->id }}">
 
                                         <input type="hidden" name="type" value="1">
 
                                         <button
-                                            class="btn btn-transparent p-1{{ $hasVotes == 'up' ? ' text-primary' : ' text-secondary' }}"
+                                            class="btn btn-transparent p-1{{ $hasVote == 'up' ? ' text-primary' : ' text-secondary' }}"
                                             type="submit">
                                             <h5 class="float-left mr-2 mt-3">{{ $post->up_votes_count }}</h5>
 
@@ -114,13 +113,13 @@
                                     @csrf
                                     @method('post')
 
-                                    <div class="{{ $hasVotes == 'down' ? 'text-primary' : 'text-secondary' }}">
+                                    <div class="{{ $hasVote == 'down' ? 'text-primary' : 'text-secondary' }}">
                                         <input type="hidden" name="post_id" value="{{ $post->id }}">
 
                                         <input type="hidden" name="type" value="0">
 
                                         <button
-                                            class="btn btn-transparent p-1{{ $hasVotes == 'down' ? ' text-primary' : ' text-secondary' }}"
+                                            class="btn btn-transparent p-1{{ $hasVote == 'down' ? ' text-primary' : ' text-secondary' }}"
                                             type="submit">
 
                                             <i class="fas fa-sort-down fa-3x float-left mr-2 mb-3"></i>

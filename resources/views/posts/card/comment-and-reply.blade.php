@@ -41,7 +41,7 @@
                                 onsubmit="return confirm('Are you sure want to delete this comment?')">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger  btn-sm">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>

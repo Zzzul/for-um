@@ -36,7 +36,7 @@ class Post extends Model
         return $this->hasMany(Votes::class)->where('type', 0);
     }
 
-    static function hasVotes($id)
+    public static function hasVote(int $id)
     {
         $votes = Votes::where(['user_id' => auth()->id(), 'post_id' => $id])->first();
 
@@ -47,7 +47,7 @@ class Post extends Model
                 return 'up';
             }
         } else {
-            return null;
+            return '';
         }
     }
 

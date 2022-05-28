@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostChanged;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use App\Http\Requests\StorePostRequest;
@@ -22,7 +23,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->withCount('comments')->where('user_id', auth()->id())->orderByDesc('created_at')->get();
+        $posts = Post::with('author:id,name')
+            ->withCount('comments')
+            ->where('user_id', auth()->id())
+            ->orderByDesc('created_at')
+            ->paginate();
 
         return view('posts.index', compact('posts'));
     }
@@ -62,19 +67,22 @@ class PostController extends Controller
      */
     public function show(string $slug)
     {
-        $hasVotes = null;
-
-        $post = Cache::remember($slug, now()->addDay(), function () use ($slug) {
+        $post = Cache::remember(Str::slug('post_' . $slug), now()->addDay(), function () use ($slug) {
             return Post::where('slug', $slug)
-                ->with('comments', 'comments.user:id,name', 'comments.replies', 'comments.replies.user:id,name')->withCount('up_votes', 'down_votes', 'comments')
+                ->with('author:id,name', 'comments', 'comments.user:id,name', 'comments.replies', 'comments.replies.user:id,name')
+                ->withCount('up_votes', 'down_votes', 'comments')
                 ->firstOrFail();
         });
 
+        $hasVote = '';
+
         if (auth()->user()) {
-            $hasVotes = $post::hasVotes($post->id);
+            $hasVote = Cache::remember(Str::slug('vote_' . auth()->id() . '_' . $post->id), now()->addDay(), function () use ($post) {
+                return Post::hasVote($post->id);
+            });
         }
 
-        return view('posts.show', compact('post', 'hasVotes'));
+        return view('posts.show', compact('post', 'hasVote'));
     }
 
     /**
@@ -83,8 +91,12 @@ class PostController extends Controller
      * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit(string $slug)
     {
+        $post = Cache::remember(Str::slug('post_' . $slug . '_edit'), now()->addDay(), function () use ($slug) {
+            return Post::where('slug', $slug)->firstOrFail();
+        });
+
         $this->authorize('view', $post);
 
         return view('posts.edit', compact('post'));
@@ -103,6 +115,8 @@ class PostController extends Controller
 
         $post->update($request->validated());
 
+        event(new PostChanged($post));
+
         return redirect()->route('post.show', $post->slug)->with('success', 'Post updated.');
     }
 
@@ -115,6 +129,8 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
+
+        event(new PostChanged($post));
 
         $post->delete();
 

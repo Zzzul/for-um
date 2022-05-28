@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostChanged;
 use App\Http\Requests\StoreReplyRequest;
 use App\Http\Requests\UpdateReplyRequest;
 use App\Models\Reply;
@@ -22,15 +23,22 @@ class ReplyController extends Controller
 
         $attr = $request->validated();
 
-        $reply = 'reply-' . $request->comment_id;
-        $attr['body'] = $request->$reply;
+        // get the reply body by comment id
+        $body = 'reply-' . $request->comment_id;
+        $attr['body'] = $request->$body;
+        $attr['user_id'] = auth()->id();
 
-        $reply = auth()->user()->replies()->create($attr);
+        $reply = Reply::create($attr);
+        $reply->load('user:id,name');
 
         if ($comment->user->id !== auth()->id()) {
             // Notify the user if reply another user comment
             $comment->user->notify(new ReplyCommentNotification($reply, $comment));
         }
+
+        $reply->load('comment.post');
+
+        event(new PostChanged($reply->comment->post));
 
         return redirect()->back()->with('success', 'Reply sended.');
     }
@@ -59,10 +67,14 @@ class ReplyController extends Controller
     {
         $this->authorize('update', $reply);
 
+        $reply->load('comment.post');
+
         $attr = $request->validated();
         $attr['body'] = $request->reply;
 
         $reply->update($attr);
+
+        event(new PostChanged($reply->comment->post));
 
         return redirect()->route('post.show', $reply->comment->post->slug)->with('success', 'Reply updated.');
     }
@@ -76,6 +88,10 @@ class ReplyController extends Controller
     public function destroy(Reply $reply)
     {
         $this->authorize('delete', $reply);
+
+        $reply->load('comment.post');
+
+        event(new PostChanged($reply->comment->post));
 
         $reply->delete();
 

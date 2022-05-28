@@ -11,6 +11,8 @@ class Comment extends Model
 
     protected $fillable = ['user_id', 'post_id', 'body'];
 
+    protected $withCount = ['replies'];
+
     public function post()
     {
         return $this->belongsTo(Post::class);

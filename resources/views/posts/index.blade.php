@@ -40,9 +40,9 @@
                         <tbody>
                             @forelse ($posts as $post)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ ($posts->currentPage() - 1)  * $posts->links()->paginator->perPage() + $loop->iteration }}</td>
                                     <td>
-                                        <a href="{{ route('post.show', $post->slug) }}">{{ $post->title }}</a>
+                                        <a href="{{ route('post.show', $post->slug) }}">{{ Str::limit($post->title, 100) }}</a>
                                     </td>
                                     <td>{{ $post->comments_count . ' ' . Str::plural('Comment', $post->comments_count) }}
                                     </td>
@@ -73,6 +73,8 @@
                         </tbody>
                     </table>
                 </div>
+
+                {{ $posts->links() }}
             </div>
         </div>
     </div>

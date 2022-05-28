@@ -10,7 +10,6 @@ class ReplyPolicy
 {
     use HandlesAuthorization;
 
-
     /**
      * Determine whether the user can view the model.
      *
